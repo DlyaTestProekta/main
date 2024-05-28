@@ -16,6 +16,7 @@ import ru.pachan.main.util.refs.auth.user.RoleRefEnum;
 import java.util.*;
 
 import static org.springframework.http.HttpStatus.*;
+import static ru.pachan.main.util.auth.TokenSearcher.getPayload;
 import static ru.pachan.main.util.enums.ExceptionEnum.*;
 import static ru.pachan.main.util.refs.auth.user.RoleRefEnum.ADMIN;
 
@@ -127,18 +128,6 @@ public class RequestProvider {
 
     }
 
-    String getPayload(String token) throws RequestException {
-        String payload;
-        try {
-            payload = new String(
-                    Base64.getDecoder().decode(
-                            token.split("\\.")[1]
-                    )
-            );
-        } catch (IllegalArgumentException e) {
-            throw new RequestException(EXPIRED_OR_INVALID_TOKEN.getMessage(), INTERNAL_SERVER_ERROR);
-        }
-        return payload;
-    }
+
 
 }
