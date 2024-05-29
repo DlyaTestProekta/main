@@ -1,0 +1,13 @@
+version: '3.9'
+
+services:
+  db-main:
+    image: postgres:16
+    restart: always
+    ports:
+      - "5432:5432"
+#      - "5444:5432"
+    environment:
+      POSTGRES_USER: admindb
+      POSTGRES_PASSWORD: passwordAdminDB
+      POSTGRES_DB: example
