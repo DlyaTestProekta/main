@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+        file: db/changelog/changes/initDB.yml
+  - include:
+      file: db/changelog/changes/createAdmin.yml

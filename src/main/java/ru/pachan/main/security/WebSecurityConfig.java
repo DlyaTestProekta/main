@@ -1,5 +1,6 @@
 package ru.pachan.main.security;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,25 +17,18 @@ import ru.pachan.main.exception.CustomAuthenticationEntryPoint;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity
+@RequiredArgsConstructor
 public class WebSecurityConfig {
 
     @Value("${spring.boot.admin.client.username}")
-    String adminUsername;
+    private String adminUsername;
 
     @Value("${spring.boot.admin.client.password}")
-    String adminPassword;
+    private String adminPassword;
 
     private final RequestProvider requestProvider;
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
-
-    public WebSecurityConfig(
-            RequestProvider requestProvider,
-            CustomAuthenticationEntryPoint customAuthenticationEntryPoint
-    ) {
-        this.requestProvider = requestProvider;
-        this.customAuthenticationEntryPoint = customAuthenticationEntryPoint;
-    }
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {

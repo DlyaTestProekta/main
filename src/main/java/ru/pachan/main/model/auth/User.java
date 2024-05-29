@@ -7,8 +7,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Set;
-
 @Getter
 @Setter
 @Entity
@@ -27,12 +25,11 @@ public class User {
     short roleId;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "fk_user_id", referencedColumnName = "user_id")
     @JsonIgnore
-    private Set<User> user;
+    private RefreshToken refreshToken;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "refresh_token_id")
+    @Column(name = "user_id")
     private long id;
 }

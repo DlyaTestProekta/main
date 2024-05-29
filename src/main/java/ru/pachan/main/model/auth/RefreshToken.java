@@ -5,9 +5,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import ru.pachan.main.model.main.Person;
-
-import java.util.Set;
 
 @Getter
 @Setter
@@ -22,7 +19,7 @@ public class RefreshToken {
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "fk_user_id", referencedColumnName = "user_id")
     @JsonIgnore
-    private Set<User> user;
+    private User user;
 
     @Id
     @Column(name = "refresh_token_id")

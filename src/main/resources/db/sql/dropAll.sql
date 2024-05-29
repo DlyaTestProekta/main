@@ -1,0 +1,1 @@
+DROP TABLE IF EXSITS persons, organizations, certificates, persons_skills, skills, users, refresh_tokens, notifications;

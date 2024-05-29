@@ -43,7 +43,7 @@ spring:
     open-in-view: false # EXPLAIN_V Держать ли открытой транзакцию пока открыт HTTP запрос
   liquibase:
     enabled: false
-    change-log: classpath:db/changelog/db-changelog.xml
+    change-log: classpath:db/changelog/db-changelog.yml
   docker:
     compose:
       enabled: false

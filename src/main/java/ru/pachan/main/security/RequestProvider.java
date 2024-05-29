@@ -6,31 +6,33 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import ru.pachan.main.exception.data.RequestException;
 import ru.pachan.main.repository.auth.UserRepository;
+import ru.pachan.main.util.auth.TokenSearcher;
 import ru.pachan.main.util.refs.auth.user.RoleRefEnum;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import static org.springframework.http.HttpStatus.*;
-import static ru.pachan.main.util.auth.TokenSearcher.getPayload;
 import static ru.pachan.main.util.enums.ExceptionEnum.*;
 import static ru.pachan.main.util.refs.auth.user.RoleRefEnum.ADMIN;
 
+@RequiredArgsConstructor
 @Component
 public class RequestProvider {
 
     @Value("${jwt.key}")
-    String secretKey;
+    private String secretKey;
 
     private final UserRepository userRepository;
-
-    public RequestProvider(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final TokenSearcher tokenSearcher;
 
     String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
@@ -84,7 +86,7 @@ public class RequestProvider {
     }
 
     Map<String, Short> getPermission(String token) throws RequestException {
-        String payload = getPayload(token);
+        String payload = tokenSearcher.getPayload(token);
 
         try {
             return RoleRefEnum.getPermissionsByRoleId(new ObjectMapper().readTree(payload).get("roleId").shortValue());
@@ -97,7 +99,7 @@ public class RequestProvider {
         List<String> path = Arrays.stream(httpServletRequest.getRequestURI().split("/")).filter(it -> !it.isBlank()).toList();
         if (!Objects.equals(path.get(1), "auth")) return;
 
-        String payload = getPayload(token);
+        String payload = tokenSearcher.getPayload(token);
 
         long userId = 0L;
 

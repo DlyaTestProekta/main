@@ -4,6 +4,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,21 +22,12 @@ import java.util.Objects;
 
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
+@RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
 
     private final RequestProvider requestProvider;
     private final String adminUsername;
     private final String adminPassword;
-
-    JwtFilter(
-            RequestProvider requestProvider,
-            String adminUsername,
-            String adminPassword
-    ) {
-        this.requestProvider = requestProvider;
-        this.adminUsername = adminUsername;
-        this.adminPassword = adminPassword;
-    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
