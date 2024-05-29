@@ -18,7 +18,7 @@ public class Certificate {
     @Column(nullable = false)
     private String code;
 
-    @OneToOne(mappedBy = "certificate", fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "certificate", optional = false, cascade = CascadeType.ALL)
     @JsonIgnore
     @ToString.Exclude
     private Person person;

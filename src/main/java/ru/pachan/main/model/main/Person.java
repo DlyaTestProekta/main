@@ -33,23 +33,29 @@ public class Person {
     @Column
     private String hobby;
 
+    @Column(name = "fk_organization_id")
+    long organizationId;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "fk_organization_id",
-            referencedColumnName = "organization_id"
-//            insertable = false,
-//            updatable = false
+            referencedColumnName = "organization_id",
+            insertable = false,
+            updatable = false
     )
     @JsonIgnore
     @ToString.Exclude
     private Organization organization;
 
+    @Column(name = "fk_certificate_id", unique = true)
+    long certificateId;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "fk_certificate_id",
-            referencedColumnName = "certificate_id"
-//            insertable = false,
-//            updatable = false
+            referencedColumnName = "certificate_id",
+            insertable = false,
+            updatable = false
     )
     @ToString.Exclude
     private Certificate certificate;
