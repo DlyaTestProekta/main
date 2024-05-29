@@ -6,9 +6,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 @Entity
 @Schema(description = "Пользователь")
 @Table(name = "users")
@@ -26,6 +28,7 @@ public class User {
 
     @OneToOne(mappedBy = "user", optional = false)
     @JsonIgnore
+    @ToString.Exclude
     private RefreshToken refreshToken;
 
     @Id

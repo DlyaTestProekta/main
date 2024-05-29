@@ -5,9 +5,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 @Entity
 @Schema(description = "Рефреш токен")
 @Table(name = "refresh_tokens")
@@ -19,6 +21,7 @@ public class RefreshToken {
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "fk_user_id", referencedColumnName = "user_id")
     @JsonIgnore
+    @ToString.Exclude
     private User user;
 
     @Id
