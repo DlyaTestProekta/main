@@ -133,5 +133,3 @@ ALTER TABLE public.refresh_tokens ADD CONSTRAINT user_id_fk FOREIGN KEY (fk_user
 REFERENCES public.users (user_id) MATCH SIMPLE
 ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- ddl-end --
-
-

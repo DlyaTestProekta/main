@@ -42,7 +42,7 @@ spring:
           entity_copy_observer: allow
     open-in-view: false # EXPLAIN_V Держать ли открытой транзакцию пока открыт HTTP запрос
   liquibase:
-    enabled: false
+    enabled: true
     change-log: classpath:db/changelog/db-changelog.yml
   docker:
     compose:

@@ -51,6 +51,7 @@ public class WebSecurityConfig {
         return httpSecurity.build();
     }
 
+    // TODO исправить в будущем по нормальному
     @Bean
     WebSecurityCustomizer webSecurityCustomizer() {
         return web -> web.ignoring().requestMatchers("api/auth/generate")

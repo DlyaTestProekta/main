@@ -20,7 +20,7 @@ public class Skill {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "skills", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "skills", fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
     private Set<Person> person;

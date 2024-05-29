@@ -22,9 +22,9 @@ public class User {
     private String password;
 
     @Column
-    short roleId;
+    private short roleId;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(mappedBy = "user", optional = false)
     @JsonIgnore
     private RefreshToken refreshToken;
 
