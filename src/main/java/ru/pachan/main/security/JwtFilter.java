@@ -12,7 +12,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.ContentCachingRequestWrapper;
+import org.springframework.web.util.ContentCachingResponseWrapper;
 import ru.pachan.main.exception.data.RequestException;
+import ru.pachan.main.util.RequestLogger;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -34,12 +36,10 @@ public class JwtFilter extends OncePerRequestFilter {
             @NonNull HttpServletRequest request,
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
-    )
-            throws ServletException, IOException {
+    ) throws ServletException, IOException {
         ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper(request);
-//        ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper(response);
+        ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper(response);
 
-//        responseWrapper.copyBodyToResponse(); // EXPLAIN_V вернуть бади респонса
 
         if (request.getRequestURI().startsWith("/actuator")) {
             String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
@@ -60,6 +60,7 @@ public class JwtFilter extends OncePerRequestFilter {
                         new SimpleGrantedAuthority("ActuatorAdmin")
                 )));
             } else {
+                RequestLogger.writeSlf4jLog(requestWrapper, responseWrapper, requestProvider, UNAUTHORIZED.getReasonPhrase());
                 response.sendError(UNAUTHORIZED.value(), UNAUTHORIZED.getReasonPhrase());
                 return;
             }
@@ -77,9 +78,11 @@ public class JwtFilter extends OncePerRequestFilter {
             } catch (RequestException e) {
                 SecurityContextHolder.clearContext();
                 response.sendError(e.getHttpStatus().value(), e.getMessage());
+                RequestLogger.writeSlf4jLog(requestWrapper, responseWrapper, requestProvider, e.getMessage());
                 return;
             }
         }
-        filterChain.doFilter(requestWrapper, response);
+        filterChain.doFilter(requestWrapper, responseWrapper);
+        RequestLogger.writeSlf4jLog(requestWrapper, responseWrapper, requestProvider, "");
     }
 }

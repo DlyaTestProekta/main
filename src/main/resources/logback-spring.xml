@@ -22,7 +22,7 @@
         </encoder>
     </appender>
 
-    <logger name="ru.borntonight.example2.Example2Application" level="INFO" additivity="false">
+    <logger name="ru.pachan.main.util.RequestLogger" level="INFO" additivity="false">
         <appender-ref ref="ROLLING"/>
     </logger>
 </configuration>
