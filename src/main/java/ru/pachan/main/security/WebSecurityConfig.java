@@ -35,15 +35,13 @@ public class WebSecurityConfig {
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.
-                csrf(AbstractHttpConfigurer::disable)
-                .sessionManagement(it -> it.sessionCreationPolicy(SessionCreationPolicy.NEVER))
-                .authorizeHttpRequests(it -> {
-                    it
-                            .requestMatchers("api/auth/**").hasAuthority("VerifiedToken")
-                            .requestMatchers("actuator/**").hasAuthority("ActuatorAdmin")
-                            .anyRequest().authenticated();
-                })
+        httpSecurity
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(it -> it.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(it -> it
+                        .requestMatchers("api/auth/**").hasAuthority("VerifiedToken")
+                        .requestMatchers("actuator/**").hasAuthority("ActuatorAdmin")
+                        .anyRequest().authenticated())
                 .addFilterBefore(
                         new JwtFilter(requestProvider, adminUsername, adminPassword),
                         BasicAuthenticationFilter.class
@@ -56,7 +54,8 @@ public class WebSecurityConfig {
     // TODO исправить в будущем по нормальному
     @Bean
     WebSecurityCustomizer webSecurityCustomizer() {
-        return web -> web.ignoring().requestMatchers("api/auth/generate")
+        return web -> web.ignoring()
+                .requestMatchers("api/auth/generate")
                 .requestMatchers("swagger")
                 .requestMatchers("swagger-ui/**")
                 .requestMatchers("apiDocs/**");

@@ -8,7 +8,7 @@ spring:
   boot:
     admin:
       client:
-        url: http://localhost:5001
+        url: http://localhost:5004
         # от server
         username: userAdmin
         password: passwordAdmin

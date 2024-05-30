@@ -79,7 +79,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 response.sendError(e.getHttpStatus().value(), e.getMessage());
                 return;
             }
-            filterChain.doFilter(requestWrapper, response);
         }
+        filterChain.doFilter(requestWrapper, response);
     }
 }

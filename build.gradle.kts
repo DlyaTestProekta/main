@@ -1,6 +1,6 @@
-val springBootStarterVer: String by project // 3.3.1-SNAPSHOT"
-//val springAdminVer: String by project // 3.2.3
+val springBootStarterVer: String by project // 3.3.1-SNAPSHOT
 val springSecurityVer: String by project // 6.2.3
+val springAdminVer: String by project // 3.2.3
 val postgreSQLVer: String by project // 42.7.3
 val liquibaseVer: String by project // 4.26.0
 //val jacksonVer: String by project // 2.17.0
@@ -33,8 +33,10 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa:$springBootStarterVer")
 	implementation("org.springframework.boot:spring-boot-starter-security:$springBootStarterVer")
 	implementation("org.springframework.boot:spring-boot-starter-web:$springBootStarterVer")
+	implementation("org.springframework.boot:spring-boot-starter-actuator:$springBootStarterVer")
+	implementation("de.codecentric:spring-boot-admin-starter-client:$springAdminVer")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$openApiVer")
-	implementation("io.micrometer:micrometer-registry-prometheus:$micrometerPrometheusVer")
+//	implementation("io.micrometer:micrometer-registry-prometheus:$micrometerPrometheusVer")
 	implementation("org.liquibase:liquibase-core:$liquibaseVer")
 	implementation("com.auth0:java-jwt:$javaJwtVer")
 	implementation("org.springframework.kafka:spring-kafka:$kafkaVer")
