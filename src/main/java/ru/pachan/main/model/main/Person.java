@@ -1,6 +1,7 @@
 package ru.pachan.main.model.main;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Digits;
@@ -72,5 +73,6 @@ public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "person_id")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private long id;
 }

@@ -4,6 +4,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,7 +12,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.ContentCachingRequestWrapper;
-import org.springframework.web.util.ContentCachingResponseWrapper;
 import ru.pachan.main.exception.data.RequestException;
 
 import java.io.IOException;
@@ -30,10 +30,16 @@ public class JwtFilter extends OncePerRequestFilter {
     private final String adminPassword;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+    protected void doFilterInternal(
+            @NonNull HttpServletRequest request,
+            @NonNull HttpServletResponse response,
+            @NonNull FilterChain filterChain
+    )
             throws ServletException, IOException {
         ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper(request);
-        ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper(response);
+//        ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper(response);
+
+//        responseWrapper.copyBodyToResponse(); // EXPLAIN_V вернуть бади респонса
 
         if (request.getRequestURI().startsWith("/actuator")) {
             String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
@@ -73,7 +79,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 response.sendError(e.getHttpStatus().value(), e.getMessage());
                 return;
             }
-            filterChain.doFilter(requestWrapper, responseWrapper);
+            filterChain.doFilter(requestWrapper, response);
         }
     }
 }

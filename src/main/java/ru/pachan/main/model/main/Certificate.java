@@ -1,6 +1,7 @@
 package ru.pachan.main.model.main;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -26,5 +27,6 @@ public class Certificate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "certificate_id")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private long id;
 }

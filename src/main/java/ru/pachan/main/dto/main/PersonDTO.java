@@ -1,4 +1,4 @@
-package ru.pachan.main.dto.auth.main;
+package ru.pachan.main.dto.main;
 
 public record PersonDTO(
         long id,

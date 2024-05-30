@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import ru.pachan.main.dto.auth.dictionary.PaginatedResponse;
-import ru.pachan.main.dto.auth.main.PersonDTO;
+import ru.pachan.main.dto.main.PersonDTO;
 import ru.pachan.main.exception.data.RequestException;
 import ru.pachan.main.model.main.Person;
 import ru.pachan.main.repository.main.PersonRepository;
@@ -23,13 +23,9 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public PaginatedResponse<PersonDTO> getAll(Pageable pageable, String firstName, List<String> firstNames) {
-        Page<Person> persons = repository.findAllPersonsWithFilters(firstName, firstNames, pageable);
+        Page<PersonDTO> persons = repository.findAllPersonsDTOWithFilters(firstName, firstNames, pageable);
 
-        List<PersonDTO> result = persons.stream().map(
-                it -> new PersonDTO(it.getId(), it.getFirstName(), it.getSurname(), it.getOrganization().getName())
-        ).toList();
-
-        return new PaginatedResponse<>(persons.getTotalElements(), result);
+        return new PaginatedResponse<>(persons.getTotalElements(), persons.getContent());
     }
 
     @Override

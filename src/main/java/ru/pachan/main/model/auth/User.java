@@ -34,5 +34,6 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private long id;
 }

@@ -1,6 +1,7 @@
 package ru.pachan.main.model.auth;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -27,5 +28,6 @@ public class RefreshToken {
     @Id
     @Column(name = "refresh_token_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private long id;
 }

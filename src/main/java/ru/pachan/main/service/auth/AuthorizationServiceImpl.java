@@ -163,7 +163,6 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 //                userRepository.findById(Long.parseLong(tokenSearcher.getPayloadField(token, "userId"))).orElseThrow(() ->
 //                        new RequestException(USER_IS_MISSING.getMessage(), UNAUTHORIZED))
 //        );
-//
 //    }
 
 }
