@@ -91,8 +91,7 @@ logging:
             bind: TRACE
 
 openapi:
-  local-url: http://localhost:5000
-  dev-url: http://162.15.20.80:5000
+  dev-url: http://localhost:5001
 
 springdoc:
   show-login-endpoint: true
@@ -112,6 +111,17 @@ jwt:
   key: secret
   access-token-expiration: 300000
   refresh-token-expiration: 36000000
+
+grpc:
+  client:
+    GLOBAL:
+      negotiationType: PLAINTEXT
+    reader-server:
+      address: static://${SERVER_IP:localhost}:${SERVER_PORT:5002}
+
+grpc-server:
+  url: ${SERVER_IP:localhost}
+  port: ${SERVER_PORT:5002}
 
 ---
 

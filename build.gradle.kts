@@ -11,6 +11,8 @@ val micrometerPrometheusVer: String by project // 1.12.4
 val lombokVer: String by project // 1.18.32
 val kafkaVer: String by project // 3.2.0
 val junitVer: String by project // 1.11.0-M2
+val protoCommonVer: String by project // 0.0.1
+val grpcVer: String by project // 3.1.0.RELEASE
 
 plugins {
 	java
@@ -26,6 +28,7 @@ java {
 
 repositories {
 	mavenCentral()
+	mavenLocal()
 	maven { url = uri("https://repo.spring.io/snapshot") }
 }
 
@@ -40,6 +43,8 @@ dependencies {
 	implementation("org.liquibase:liquibase-core:$liquibaseVer")
 	implementation("com.auth0:java-jwt:$javaJwtVer")
 	implementation("org.springframework.kafka:spring-kafka:$kafkaVer")
+	implementation("ru.pachan:proto-common:$protoCommonVer")
+	implementation("net.devh:grpc-client-spring-boot-starter:$grpcVer")
 	runtimeOnly("org.postgresql:postgresql:$postgreSQLVer")
 	testImplementation("org.springframework.boot:spring-boot-starter-test:$springBootStarterVer")
 	testImplementation("org.springframework.kafka:spring-kafka-test:$kafkaVer")
