@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - changeSet:
+      id: createIndexPersonForFirstName
+      author: BornToNight
+      changes:
+        - sqlFile:
+            path: db/sql/createIndexPersonForFirstName.sql

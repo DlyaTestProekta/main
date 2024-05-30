@@ -3,3 +3,5 @@ databaseChangeLog:
         file: db/changelog/changes/initDB.yml
   - include:
       file: db/changelog/changes/createAdmin.yml
+  - include:
+      file: db/changelog/changes/createIndexPersonForFirstName.yml
