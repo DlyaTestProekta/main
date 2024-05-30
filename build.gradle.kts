@@ -36,7 +36,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-actuator:$springBootStarterVer")
 	implementation("de.codecentric:spring-boot-admin-starter-client:$springAdminVer")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$openApiVer")
-//	implementation("io.micrometer:micrometer-registry-prometheus:$micrometerPrometheusVer")
+	implementation("io.micrometer:micrometer-registry-prometheus:$micrometerPrometheusVer")
 	implementation("org.liquibase:liquibase-core:$liquibaseVer")
 	implementation("com.auth0:java-jwt:$javaJwtVer")
 	implementation("org.springframework.kafka:spring-kafka:$kafkaVer")
