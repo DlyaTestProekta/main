@@ -39,5 +39,5 @@ out/
 ### Self ###
 *.log
 
-scripts/prometheus
-scripts/grafana
+/scripts/grafana/
+/scripts/prometheus/
