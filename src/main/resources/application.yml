@@ -1,6 +1,6 @@
 application:
   kafka:
-    topic: "topic"
+    topic: "pet-topic"
 
 spring:
   application:
@@ -60,7 +60,7 @@ spring:
         in-test: false
 
 server:
-  port: 5000
+  port: 5001
   max-http-header-size: 100000
 
 # Настройка Actuator
@@ -91,7 +91,8 @@ logging:
             bind: TRACE
 
 openapi:
-  dev-url: http://localhost:5001
+  local-url: http://localhost:5001
+  dev-url: http://162.16.20.80:5001
 
 springdoc:
   show-login-endpoint: true

@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import ru.pachan.main.dto.main.PersonDTO;
+import ru.pachan.main.dto.main.PersonDto;
 import ru.pachan.main.model.main.Person;
 
 import java.util.List;
@@ -15,12 +15,12 @@ import java.util.List;
 public interface PersonRepository extends JpaRepository<Person, Long> {
 
     @Query(
-            "SELECT new ru.pachan.main.dto.main.PersonDTO(p.id, p.firstName, p.surname, p.organization.name)" +
+            "SELECT new ru.pachan.main.dto.main.PersonDto(p.id, p.firstName, p.surname, p.organization.name)" +
                     "FROM Person p WHERE " +
                     "(LOWER(firstName) LIKE CONCAT('%', LOWER(:firstName), '%') OR :firstName IS NULL) AND " +
                     "(firstName IN (:firstNames) OR :firstNames IS NULL )"
     )
-    Page<PersonDTO> findAllPersonsDTOWithFilters(
+    Page<PersonDto> findAllPersonsDTOWithFilters(
             @Param("firstName") String firstName,
             @Param("firstNames") List<String> firstNames,
             Pageable pageable

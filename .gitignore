@@ -38,3 +38,6 @@ out/
 
 ### Self ###
 *.log
+
+scripts/prometheus
+scripts/grafana

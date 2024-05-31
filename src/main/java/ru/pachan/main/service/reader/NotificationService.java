@@ -1,9 +1,9 @@
 package ru.pachan.main.service.reader;
 
-import ru.pachan.main.dto.reader.NotificationDTO;
+import ru.pachan.main.dto.reader.NotificationDto;
 
 public interface NotificationService {
-    NotificationDTO findByPersonIdNotification(long personId);
+    NotificationDto findByPersonIdNotification(long personId);
 
-    NotificationDTO findByIdNotification(long notificationId);
+    NotificationDto findByIdNotification(long notificationId);
 }

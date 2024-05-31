@@ -11,7 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.pachan.main.dto.auth.dictionary.PaginatedResponse;
-import ru.pachan.main.dto.main.PersonDTO;
+import ru.pachan.main.dto.main.PersonDto;
 import ru.pachan.main.exception.data.RequestException;
 import ru.pachan.main.model.main.Person;
 import ru.pachan.main.service.main.PersonService;
@@ -30,7 +30,7 @@ public class PersonController {
 
     @Operation(summary = "Возвращение всех с фильтрацией")
     @GetMapping
-    public ResponseEntity<PaginatedResponse<PersonDTO>> getAll(
+    public ResponseEntity<PaginatedResponse<PersonDto>> getAll(
             @ParameterObject Pageable pageable,
             @Parameter(description = "Фильтр по имени сотрудника")
             @RequestParam(required = false) String firstName,

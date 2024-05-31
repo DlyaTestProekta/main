@@ -6,7 +6,7 @@ import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Service;
 import ru.pachan.grpc.NotificationServiceGrpc;
 import ru.pachan.grpc.Reader;
-import ru.pachan.main.dto.reader.NotificationDTO;
+import ru.pachan.main.dto.reader.NotificationDto;
 
 import static ru.pachan.grpc.Reader.FindByPersonIdNotificationRequest;
 import static ru.pachan.grpc.Reader.FindByPersonIdNotificationResponse;
@@ -18,7 +18,7 @@ public class NotificationServiceImpl implements NotificationService {
     @GrpcClient("reader-server")
     private NotificationServiceGrpc.NotificationServiceBlockingStub notificationServiceBlockingStub;
 
-    public NotificationDTO findByPersonIdNotification(long personId) {
+    public NotificationDto findByPersonIdNotification(long personId) {
         FindByPersonIdNotificationRequest findByPersonIdNotificationRequest =
                 FindByPersonIdNotificationRequest.newBuilder()
                         .setPersonId(personId)
@@ -28,7 +28,7 @@ public class NotificationServiceImpl implements NotificationService {
             FindByPersonIdNotificationResponse findByPersonIdNotificationResponse =
                     notificationServiceBlockingStub.findByPersonIdNotification(findByPersonIdNotificationRequest);
             Reader.Notification notification = findByPersonIdNotificationResponse.getNotification();
-            return new NotificationDTO(
+            return new NotificationDto(
                     notification.getNotificationId(),
                     notification.getPersonId(),
                     notification.getCount()
@@ -37,10 +37,10 @@ public class NotificationServiceImpl implements NotificationService {
             e.printStackTrace();
         }
 
-        return new NotificationDTO(0, 0, 0);
+        return new NotificationDto(0, 0, 0);
     }
 
-    public NotificationDTO findByIdNotification(long notificationId) {
+    public NotificationDto findByIdNotification(long notificationId) {
         Reader.FindByIdNotificationRequest findByIdNotificationRequest =
                 Reader.FindByIdNotificationRequest.newBuilder()
                         .setNotificationId(notificationId)
@@ -50,7 +50,7 @@ public class NotificationServiceImpl implements NotificationService {
             Reader.FindByIdNotificationResponse findByIdNotificationResponse =
                     notificationServiceBlockingStub.findByIdNotification(findByIdNotificationRequest);
             Reader.Notification notification = findByIdNotificationResponse.getNotification();
-            return new NotificationDTO(
+            return new NotificationDto(
                     notification.getNotificationId(),
                     notification.getPersonId(),
                     notification.getCount()
@@ -59,6 +59,6 @@ public class NotificationServiceImpl implements NotificationService {
             e.printStackTrace();
         }
 
-        return new NotificationDTO(0, 0, 0);
+        return new NotificationDto(0, 0, 0);
     }
 }

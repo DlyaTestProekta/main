@@ -1,6 +1,6 @@
 package ru.pachan.main.dto.main;
 
-public record PersonDTO(
+public record PersonDto(
         long id,
         String firstName,
         String surname,
