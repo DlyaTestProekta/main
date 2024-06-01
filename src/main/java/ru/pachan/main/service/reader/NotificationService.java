@@ -1,9 +1,10 @@
 package ru.pachan.main.service.reader;
 
 import ru.pachan.main.dto.reader.NotificationDto;
+import ru.pachan.main.exception.data.RequestException;
 
 public interface NotificationService {
-    NotificationDto findByPersonIdNotification(long personId);
+    NotificationDto findByPersonIdNotification(long personId) throws RequestException;
 
-    NotificationDto findByIdNotification(long notificationId);
+    NotificationDto findByIdNotification(long notificationId) throws RequestException;
 }

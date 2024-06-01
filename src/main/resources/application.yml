@@ -118,11 +118,7 @@ grpc:
     GLOBAL:
       negotiationType: PLAINTEXT
     reader-server:
-      address: static://${SERVER_IP:localhost}:${SERVER_PORT:5002}
-
-grpc-server:
-  url: ${SERVER_IP:localhost}
-  port: ${SERVER_PORT:5002}
+      address: static://localhost:5005
 
 ---
 
