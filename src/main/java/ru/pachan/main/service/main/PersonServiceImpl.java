@@ -10,6 +10,8 @@ import ru.pachan.main.dto.auth.dictionary.PaginatedResponse;
 import ru.pachan.main.dto.main.PersonDto;
 import ru.pachan.main.exception.data.RequestException;
 import ru.pachan.main.model.main.Person;
+import ru.pachan.main.model.main.PersonQueryBulder;
+import ru.pachan.main.repository.main.PersonDao;
 import ru.pachan.main.repository.main.PersonRepository;
 
 import java.util.List;
@@ -21,6 +23,7 @@ import static ru.pachan.main.util.enums.ExceptionEnum.OBJECT_NOT_FOUND;
 public class PersonServiceImpl implements PersonService {
 
     private final PersonRepository repository;
+    private final PersonDao personDao;
 
     @Transactional
     @Override
@@ -28,6 +31,11 @@ public class PersonServiceImpl implements PersonService {
         Page<PersonDto> persons = repository.findAllPersonsDTOWithFilters(firstName, firstNames, pageable);
 
         return new PaginatedResponse<>(persons.getTotalElements(), persons.getContent());
+    }
+
+    @Override
+    public PaginatedResponse<PersonQueryBulder> getAllSqlQueryBuilder( String firstName, List<String> firstNames) {
+        return personDao.getPersons(firstName, firstNames);
     }
 
     @Override
