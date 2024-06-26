@@ -1,4 +1,4 @@
-package ru.pachan.main.repository.main;
+package ru.pachan.main.repository.main.person;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;

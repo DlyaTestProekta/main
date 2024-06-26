@@ -13,6 +13,7 @@ val kafkaVer: String by project // 3.2.0
 val junitVer: String by project // 1.11.0-M2
 val protoCommonVer: String by project // 0.0.1
 val grpcVer: String by project // 3.1.0.RELEASE
+val jpamodelgenVer: String by project // 6.4.4.Final
 
 plugins {
 	java
@@ -52,6 +53,9 @@ dependencies {
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher:$junitVer")
 	compileOnly("org.projectlombok:lombok:$lombokVer")
 	annotationProcessor("org.projectlombok:lombok:$lombokVer")
+	// EXPLAIN_V Генерация класса Entity с полями для Criteria
+	compileOnly("org.hibernate:hibernate-jpamodelgen:$jpamodelgenVer")
+	annotationProcessor("org.hibernate:hibernate-jpamodelgen:$jpamodelgenVer")
 }
 
 tasks.withType<Test> {

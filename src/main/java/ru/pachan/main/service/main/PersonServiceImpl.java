@@ -11,8 +11,9 @@ import ru.pachan.main.dto.main.PersonDto;
 import ru.pachan.main.exception.data.RequestException;
 import ru.pachan.main.model.main.Person;
 import ru.pachan.main.model.main.PersonQueryBulder;
-import ru.pachan.main.repository.main.PersonDao;
-import ru.pachan.main.repository.main.PersonRepository;
+import ru.pachan.main.repository.main.person.PersonDao;
+import ru.pachan.main.repository.main.person.PersonRepository;
+import ru.pachan.main.repository.main.person.PersonSpecification;
 
 import java.util.List;
 
@@ -34,8 +35,17 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public PaginatedResponse<PersonQueryBulder> getAllSqlQueryBuilder( String firstName, List<String> firstNames) {
+    public PaginatedResponse<PersonQueryBulder> getAllWithSqlQueryBuilder(String firstName, List<String> firstNames) {
         return personDao.getPersons(firstName, firstNames);
+    }
+
+    @Transactional
+    @Override
+    public PaginatedResponse<PersonDto> getAllWithSpecification(Pageable pageable, String firstName) {
+        PersonSpecification specification = new PersonSpecification(firstName);
+        Page<Person> persons = repository.findAll(specification, pageable);
+        List<PersonDto> result = persons.getContent().stream().map(it -> new PersonDto(it.getId(), it.getFirstName(), it.getSurname(), it.getOrganization().getName())).toList();
+        return new PaginatedResponse<>(persons.getTotalElements(), result);
     }
 
     @Override

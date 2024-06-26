@@ -13,7 +13,9 @@ public interface PersonService {
 
     PaginatedResponse<PersonDto> getAll(Pageable pageable, String firstName, List<String> firstNames);
 
-    PaginatedResponse<PersonQueryBulder> getAllSqlQueryBuilder(String firstName, List<String> firstNames);
+    PaginatedResponse<PersonQueryBulder> getAllWithSqlQueryBuilder(String firstName, List<String> firstNames);
+
+    PaginatedResponse<PersonDto> getAllWithSpecification(Pageable pageable, String firstName);
 
     Person getOne(long id) throws RequestException;
 
