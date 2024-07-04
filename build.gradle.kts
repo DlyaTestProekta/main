@@ -38,6 +38,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-security:$springBootStarterVer")
 	implementation("org.springframework.boot:spring-boot-starter-web:$springBootStarterVer")
 	implementation("org.springframework.boot:spring-boot-starter-actuator:$springBootStarterVer")
+	implementation("org.springframework.boot:spring-boot-starter-data-redis:$springBootStarterVer")
 	implementation("de.codecentric:spring-boot-admin-starter-client:$springAdminVer")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$openApiVer")
 	implementation("io.micrometer:micrometer-registry-prometheus:$micrometerPrometheusVer")

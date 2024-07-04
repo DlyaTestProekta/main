@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.Set;
 
 @Getter
@@ -16,7 +17,7 @@ import java.util.Set;
 @Entity
 @Schema(description = "Организация")
 @Table(name = "organizations")
-public class Organization {
+public class Organization implements Serializable {
 
     @Column(nullable = false)
     private String name;

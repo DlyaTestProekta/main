@@ -1,4 +1,11 @@
+volumes:
+  cache:
+    driver: local
+  grafana_storage: { }
+  prometheus: { }
+
 services:
+
   postgres:
     image: postgres:16
     restart: always
@@ -9,12 +16,14 @@ services:
       POSTGRES_USER: admindb
       POSTGRES_PASSWORD: passwordAdminDB
       POSTGRES_DB: example
+
   grafana:
-    build: './config/grafana'
+    container_name: grafana
+    build: ./config/grafana
     ports:
       - 3000:3000
     volumes:
-      - ./grafana:/var/lib/grafana
+      - grafana_storage:/var/lib/grafana
     environment:
       - GF_SECURITY_ADMIN_USER=userAdmin
       - GF_SECURITY_ADMIN_PASSWORD=passwordAdmin
@@ -23,16 +32,18 @@ services:
         aliases:
           - grafana
   prometheus:
+    container_name: prometheus
     image: prom/prometheus
     ports:
       - 9090:9090
     volumes:
       - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
-      - ./prometheus:/prometheus
+      - prometheus:/prometheus
     networks:
       monitoring:
         aliases:
           - prometheus
+
   zookeeper:
     image: confluentinc/cp-zookeeper:6.2.0
     container_name: zookeeper
@@ -44,16 +55,27 @@ services:
     image: confluentinc/cp-kafka:7.0.0
     container_name: broker
     ports:
-      - "9092:9092"
+      - 9092:9092
     depends_on:
       - zookeeper
     environment:
       KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://broker:29092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+
+  redis:
+    image: redis:7.4-rc-alpine
+    restart: always
+    container_name: redis
+    ports:
+      - 6379:6379
+    command: redis-server --save 20 1 --loglevel warning --requirepass UmVkaXNQYXNzd29yZA== # EXPLAIN_V в BASE64
+    volumes:
+      - cache:/data
+
 networks:
   monitoring:

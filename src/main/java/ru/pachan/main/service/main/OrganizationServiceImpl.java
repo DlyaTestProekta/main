@@ -1,6 +1,10 @@
 package ru.pachan.main.service.main;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -18,6 +22,8 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     private final OrganizationRepository repository;
 
+    // EXPLAIN_V Возможно обдумать и переделать (Evict) из-за pageable
+    @Cacheable(value = "OrganizationService::getAll", key = "#pageable")
     @Override
     public PaginatedResponse<Organization> getAll(Pageable pageable) {
         Page<Organization> result = repository.findAll(pageable);
@@ -26,17 +32,26 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
+    @Cacheable(value = "OrganizationService::getOne", key = "#id")
     public Organization getOne(long id) throws RequestException {
         return repository.findById(id).orElseThrow(() ->
                 new RequestException(OBJECT_NOT_FOUND.getMessage(), HttpStatus.GONE));
 
     }
 
+    @Caching(
+            cacheable = @Cacheable(value = "OrganizationService::getOne", key = "#organization.id"),
+            evict = @CacheEvict(value = "OrganizationService::getAll", allEntries = true)
+    )
     @Override
     public Organization createOne(Organization organization) {
         return repository.save(organization);
     }
 
+    @Caching(
+            put = @CachePut(value = "OrganizationService::getOne", key = "#id"),
+            evict = @CacheEvict(value = "OrganizationService::getAll", allEntries = true)
+    )
     @Override
     public Organization updateOne(long id, Organization organization) {
         organization.setId(id);
@@ -44,6 +59,10 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
+    @Caching(evict = {
+            @CacheEvict(value = "OrganizationService::getOne", key = "#id"),
+            @CacheEvict(value = "OrganizationService::getAll", allEntries = true)
+    })
     public void deleteOne(long id) {
         repository.deleteById(id);
     }
