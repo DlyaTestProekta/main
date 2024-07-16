@@ -1,6 +1,6 @@
 package ru.pachan.main.dto.auth;
 
-public record Authorization(
+public record AuthorizationDto(
         String login,
         String password
 ) {

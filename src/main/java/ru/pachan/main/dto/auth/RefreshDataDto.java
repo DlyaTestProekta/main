@@ -1,6 +1,6 @@
 package ru.pachan.main.dto.auth;
 
-public record RefreshData(
+public record RefreshDataDto(
         String refresh,
         String token,
         long roleId,

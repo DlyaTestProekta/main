@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.pachan.main.dto.auth.dictionary.PaginatedResponse;
+import ru.pachan.main.dto.dictionary.PaginatedResponse;
 import ru.pachan.main.dto.main.PersonDto;
 import ru.pachan.main.exception.data.RequestException;
 import ru.pachan.main.model.main.Person;

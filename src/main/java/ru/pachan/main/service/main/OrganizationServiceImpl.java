@@ -9,7 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import ru.pachan.main.dto.auth.dictionary.PaginatedResponse;
+import ru.pachan.main.dto.dictionary.PaginatedResponse;
 import ru.pachan.main.exception.data.RequestException;
 import ru.pachan.main.model.main.Organization;
 import ru.pachan.main.repository.main.OrganizationRepository;

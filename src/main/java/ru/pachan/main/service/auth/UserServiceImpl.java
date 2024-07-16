@@ -5,7 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.pachan.main.dto.auth.dictionary.PaginatedResponse;
+import ru.pachan.main.dto.dictionary.PaginatedResponse;
 import ru.pachan.main.exception.data.RequestException;
 import ru.pachan.main.model.auth.RefreshToken;
 import ru.pachan.main.model.auth.User;

@@ -3,7 +3,7 @@ package ru.pachan.main.repository.main.person;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
-import ru.pachan.main.dto.auth.dictionary.PaginatedResponse;
+import ru.pachan.main.dto.dictionary.PaginatedResponse;
 import ru.pachan.main.model.main.PersonQueryBulder;
 import ru.pachan.main.util.sql.OrderDirection;
 import ru.pachan.main.util.sql.SqlBuilderResult;

@@ -5,8 +5,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.pachan.main.dto.auth.Authorization;
-import ru.pachan.main.dto.auth.RefreshData;
+import ru.pachan.main.dto.auth.AuthorizationDto;
+import ru.pachan.main.dto.auth.RefreshDataDto;
 import ru.pachan.main.exception.data.RequestException;
 import ru.pachan.main.service.auth.AuthorizationService;
 
@@ -23,10 +23,10 @@ class AuthorizationController {
             description = "Генерирует JWT, если переданы верный логин и пароль"
     )
     @PostMapping("/generate")
-    public ResponseEntity<RefreshData> generate(
-            @RequestBody Authorization authorization
+    public ResponseEntity<RefreshDataDto> generate(
+            @RequestBody AuthorizationDto authorizationDto
     ) throws RequestException {
-        return ResponseEntity.ok(service.generate(authorization));
+        return ResponseEntity.ok(service.generate(authorizationDto));
     }
 
     @Operation(
@@ -34,7 +34,7 @@ class AuthorizationController {
             description = "Обновляет JWT, по переданному старому JWT"
     )
     @GetMapping("/refresh")
-    public ResponseEntity<RefreshData> refresh(
+    public ResponseEntity<RefreshDataDto> refresh(
             @RequestHeader("Authorization") String authToken
     ) throws RequestException {
         return ResponseEntity.ok(service.refresh(authToken));

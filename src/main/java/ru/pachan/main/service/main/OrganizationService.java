@@ -1,7 +1,7 @@
 package ru.pachan.main.service.main;
 
 import org.springframework.data.domain.Pageable;
-import ru.pachan.main.dto.auth.dictionary.PaginatedResponse;
+import ru.pachan.main.dto.dictionary.PaginatedResponse;
 import ru.pachan.main.exception.data.RequestException;
 import ru.pachan.main.model.main.Organization;
 

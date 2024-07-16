@@ -1,4 +1,4 @@
-package ru.pachan.main.dto.auth.dictionary;
+package ru.pachan.main.dto.dictionary;
 
 import java.io.Serializable;
 import java.util.List;

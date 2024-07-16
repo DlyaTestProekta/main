@@ -1,9 +1,7 @@
 package ru.pachan.main.service.auth;
 
 import org.springframework.data.domain.Pageable;
-import ru.pachan.main.dto.auth.Authorization;
-import ru.pachan.main.dto.auth.RefreshData;
-import ru.pachan.main.dto.auth.dictionary.PaginatedResponse;
+import ru.pachan.main.dto.dictionary.PaginatedResponse;
 import ru.pachan.main.exception.data.RequestException;
 import ru.pachan.main.model.auth.User;
 

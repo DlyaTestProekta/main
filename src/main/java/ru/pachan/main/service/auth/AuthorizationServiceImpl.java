@@ -6,8 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.pachan.main.dto.auth.Authorization;
-import ru.pachan.main.dto.auth.RefreshData;
+import ru.pachan.main.dto.auth.AuthorizationDto;
+import ru.pachan.main.dto.auth.RefreshDataDto;
 import ru.pachan.main.exception.data.RequestException;
 import ru.pachan.main.model.auth.RefreshToken;
 import ru.pachan.main.model.auth.User;
@@ -37,16 +37,16 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final TokenSearcher tokenSearcher;
 
-    public RefreshData generate(Authorization authorization) throws RequestException {
+    public RefreshDataDto generate(AuthorizationDto authorizationDto) throws RequestException {
         User user = validateUser("",
-                userRepository.findByLogin(authorization.login()).orElseThrow(() ->
+                userRepository.findByLogin(authorizationDto.login()).orElseThrow(() ->
                         new RequestException(
                                 OBJECT_NOT_FOUND.getMessage(),
                                 GONE
                         ))
         );
         // TODO переделать на новое
-        if (new BCryptPasswordEncoder().matches(authorization.password(), user.getPassword())) {
+        if (new BCryptPasswordEncoder().matches(authorizationDto.password(), user.getPassword())) {
             return generateJWT(user, null);
         } else {
             throw new RequestException(
@@ -56,11 +56,11 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         }
     }
 
-    public RefreshData refresh(String token) throws RequestException {
+    public RefreshDataDto refresh(String token) throws RequestException {
         return generateJWT(null, token);
     }
 
-    private RefreshData generateJWT(User user, String token) throws RequestException {
+    private RefreshDataDto generateJWT(User user, String token) throws RequestException {
         RefreshToken refreshEntry = new RefreshToken();
         try {
             if (token != null && !token.isBlank()) {
@@ -137,10 +137,10 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
         // ATTENTION Мб переделать
         if (user != null) {
-            return new RefreshData(userRefreshToken.getRefreshToken(), newToken, user.getRoleId(), user.getRoleId());
+            return new RefreshDataDto(userRefreshToken.getRefreshToken(), newToken, user.getRoleId(), user.getRoleId());
 
         } else {
-            return new RefreshData(userRefreshToken.getRefreshToken(), newToken, 0, 0);
+            return new RefreshDataDto(userRefreshToken.getRefreshToken(), newToken, 0, 0);
 
         }
 
