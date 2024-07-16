@@ -1,37 +1,39 @@
 application:
   kafka:
-    topic: "pet-topic"
+    topic: ${KAFKA_TOPIC}
 
 spring:
   application:
     name: main
+  config:
+    import: optional:file:.env[.properties]
   security:
     user:
-      name: userAdmin
-      password: passwordAdmin
+      name: ${SPRING_USER}
+      password: ${SPRING_PASSWORD}
   boot:
     admin:
       client:
         url: http://localhost:5004
         # от server
-        username: userAdmin
-        password: passwordAdmin
+        username: ${SPRING_ADMIN_USER}
+        password: ${SPRING_ADMIN_PASSWORD}
         instance:
           metadata:
             # от server
             user:
-              name: userAdmin
-              password: passwordAdmin
+              name: ${SPRING_ADMIN_USER}
+              password: ${SPRING_ADMIN_PASSWORD}
   kafka:
     producer:
-      bootstrap-servers: "127.0.0.1:9092"
-      client-id: "producer"
+      bootstrap-servers: ${KAFKA_HOST}:9092
+      client-id: ${KAFKA_CLIENT_ID}
 
   data:
     redis:
-      host: localhost
+      host: ${REDIS_HOST}
       port: 6379
-      password: UmVkaXNQYXNzd29yZA== # EXPLAIN_V в BASE64
+      password: ${REDIS_PASSWORD} # EXPLAIN_V в BASE64
     web:
       pageable:
         default-page-size: 50
@@ -39,9 +41,9 @@ spring:
         one-indexed-parameters: true
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/example
-    username: admindb
-    password: passwordAdminDB
+    url: jdbc:postgresql://${POSTGRES_HOST}:5432/${POSTGRES_DB}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
   jpa:
     show-sql: true
     hibernate:
@@ -87,7 +89,6 @@ management:
       percentiles-histogram:
         "[http.server.requests]": true
 
-
 logging:
   path: ${user.home}/logs/main
   level:
@@ -116,27 +117,24 @@ springdoc:
     defaultModelsExpandDepth: 10
 
 jwt:
-  key: secret
-  access-token-expiration: 300000
-  refresh-token-expiration: 36000000
+  key: ${JWT_KEY}
+  access-token-expiration: ${ACCESS_TOKEN_EXPIRATION}
+  refresh-token-expiration: ${REFRESH_TOKEN_EXPIRATION}
 
 grpc:
   client:
     GLOBAL:
       negotiationType: PLAINTEXT
     reader-server:
-      address: static://localhost:5005
+      address: static://${GRPC_HOST}:5005
 
 ---
 
 spring:
   config:
+    import: optional:file:.env[.properties]
     activate:
       on-profile: "prod"
-  datasource:
-    url: jdbc:postgresql://localhost:5432/example
-    username: admindb
-    password: passwordAdminDB
   jpa:
     show-sql: false
   liquibase:
@@ -157,6 +155,3 @@ springdoc:
     enabled: false
   swagger-ui:
     enabled: false
-
-jwt:
-  key: ltymCehrf

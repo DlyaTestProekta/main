@@ -6,6 +6,16 @@ volumes:
 
 services:
 
+#  app:
+#    build:
+#      context: .
+#    container_name: main
+#    depends_on:
+#      - postgres
+#    env_file:
+#      - .env
+#    ports: 5001:5001
+
   postgres:
     image: postgres:16
     restart: always
@@ -13,9 +23,9 @@ services:
       - 5432:5432
     #      - "5444:5432"
     environment:
-      POSTGRES_USER: admindb
-      POSTGRES_PASSWORD: passwordAdminDB
-      POSTGRES_DB: example
+      POSTGRES_USER: admindb # ${POSTGRES_USER}
+      POSTGRES_PASSWORD: passwordAdminDB # ${POSTGRES_PASSWORD}
+      POSTGRES_DB: example # ${POSTGRES_DB}
 
   grafana:
     container_name: grafana
@@ -25,8 +35,8 @@ services:
     volumes:
       - grafana_storage:/var/lib/grafana
     environment:
-      - GF_SECURITY_ADMIN_USER=userAdmin
-      - GF_SECURITY_ADMIN_PASSWORD=passwordAdmin
+      - GF_SECURITY_ADMIN_USER=userAdmin # ${GRAFANA_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=passwordAdmin # ${GRAFANA_PASSWORD}
     networks:
       monitoring:
         aliases:
@@ -73,7 +83,7 @@ services:
     container_name: redis
     ports:
       - 6379:6379
-    command: redis-server --save 20 1 --loglevel warning --requirepass UmVkaXNQYXNzd29yZA== # EXPLAIN_V в BASE64
+    command: redis-server --save 20 1 --loglevel warning --requirepass UmVkaXNQYXNzd29yZA== # ${REDIS_PASSWORD} EXPLAIN_V в BASE64
     volumes:
       - cache:/data
 

@@ -38,6 +38,7 @@ out/
 
 ### Self ###
 *.log
+.env
 
 /scripts/grafana/
 /scripts/prometheus/
