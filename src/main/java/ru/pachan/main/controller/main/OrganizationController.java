@@ -8,8 +8,16 @@ import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import ru.pachan.main.dto.dictionary.PaginatedResponse;
+import ru.pachan.main.dto.main.organization.OrganizationDto;
 import ru.pachan.main.exception.data.RequestException;
 import ru.pachan.main.model.main.Organization;
 import ru.pachan.main.service.main.organization.OrganizationService;
@@ -30,6 +38,22 @@ public class OrganizationController {
             @ParameterObject Pageable pageable
     ) {
         return ResponseEntity.ok(service.getAll(pageable));
+    }
+
+    @Operation(summary = "Возвращение всех с фильтрацией")
+    @GetMapping("/entityGraph")
+    public ResponseEntity<PaginatedResponse<OrganizationDto>> getAllWithEntityGraph(
+            @ParameterObject Pageable pageable
+    ) {
+        return ResponseEntity.ok(service.getAllWithEntityGraph(pageable));
+    }
+
+    @Operation(summary = "Возвращение всех с фильтрацией")
+    @GetMapping("/entityGraph/v2")
+    public ResponseEntity<PaginatedResponse<OrganizationDto>> getAllWithEntityGraph2(
+            @ParameterObject Pageable pageable
+    ) {
+        return ResponseEntity.ok(service.getAllWithEntityGraph2(pageable));
     }
 
     @Operation(summary = "Возвращение по переданному id")

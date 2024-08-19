@@ -20,6 +20,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Set;
 
@@ -29,7 +30,7 @@ import java.util.Set;
 @Entity
 @Schema(description = "Сотрудник")
 @Table(name = "persons")
-public class Person {
+public class Person implements Serializable {
 
     @Column(nullable = false)
     private String firstName;

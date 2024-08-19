@@ -8,13 +8,15 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @ToString
 @Entity
 @Schema(description = "Удостоверение")
 @Table(name = "certificates")
-public class Certificate {
+public class Certificate implements Serializable {
 
     @Column(nullable = false)
     private String code;

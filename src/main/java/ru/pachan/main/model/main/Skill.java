@@ -24,7 +24,7 @@ public class Skill {
     @ManyToMany(mappedBy = "skills", fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
-    private Set<Person> person;
+    private Set<Person> persons;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

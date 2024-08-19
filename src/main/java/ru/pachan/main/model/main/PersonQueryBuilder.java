@@ -11,13 +11,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @Accessors(chain = true)
 @Entity
 @Table(name = "persons")
-public class PersonQueryBuilder {
+public class PersonQueryBuilder implements Serializable {
 
     @Id
     @Column(name = "person_id")

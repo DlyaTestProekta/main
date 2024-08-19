@@ -10,9 +10,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import ru.pachan.main.dto.dictionary.PaginatedResponse;
+import ru.pachan.main.dto.main.organization.OrganizationDto;
+import ru.pachan.main.dto.main.organization.PersonOrganizationDto;
 import ru.pachan.main.exception.data.RequestException;
 import ru.pachan.main.model.main.Organization;
 import ru.pachan.main.repository.main.OrganizationRepository;
+
+import java.util.stream.Collectors;
 
 import static ru.pachan.main.util.enums.ExceptionEnum.OBJECT_NOT_FOUND;
 
@@ -27,8 +31,47 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Override
     public PaginatedResponse<Organization> getAll(Pageable pageable) {
         Page<Organization> result = repository.findAll(pageable);
-
         return new PaginatedResponse<>(result.getTotalElements(), result.getContent());
+    }
+
+    @Override
+    public PaginatedResponse<OrganizationDto> getAllWithEntityGraph(Pageable pageable) {
+        Page<Organization> result = repository.findAllWithEntityGraphBy(pageable);
+        return new PaginatedResponse<>(
+                result.getTotalElements(),
+                result.getContent().stream().map(
+                        organization -> new OrganizationDto(
+                                organization.getId(),
+                                organization.getName(),
+                                organization.getPersons().stream().map(
+                                        person -> new PersonOrganizationDto(
+                                                person.getId(),
+                                                person.getFirstName(),
+                                                person.getSurname()
+                                        )
+                                ).collect(Collectors.toSet())
+                        )
+                ).toList());
+    }
+
+    @Override
+    public PaginatedResponse<OrganizationDto> getAllWithEntityGraph2(Pageable pageable) {
+        Page<Organization> result = repository.findAllWithEntityGraph2By(pageable);
+        return new PaginatedResponse<>(
+                result.getTotalElements(),
+                result.getContent().stream().map(
+                        organization -> new OrganizationDto(
+                                organization.getId(),
+                                organization.getName(),
+                                organization.getPersons().stream().map(
+                                        person -> new PersonOrganizationDto(
+                                                person.getId(),
+                                                person.getFirstName(),
+                                                person.getSurname()
+                                        )
+                                ).collect(Collectors.toSet())
+                        )
+                ).toList());
     }
 
     @Override
