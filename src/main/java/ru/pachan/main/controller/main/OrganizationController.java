@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.pachan.main.dto.dictionary.PaginatedResponse;
 import ru.pachan.main.exception.data.RequestException;
 import ru.pachan.main.model.main.Organization;
-import ru.pachan.main.service.main.OrganizationService;
+import ru.pachan.main.service.main.organization.OrganizationService;
 
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 

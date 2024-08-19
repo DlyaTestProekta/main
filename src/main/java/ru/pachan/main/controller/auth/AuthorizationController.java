@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.pachan.main.dto.auth.AuthorizationDto;
 import ru.pachan.main.dto.auth.RefreshDataDto;
 import ru.pachan.main.exception.data.RequestException;
-import ru.pachan.main.service.auth.AuthorizationService;
+import ru.pachan.main.service.auth.authorization.AuthorizationService;
 
 @CrossOrigin
 @RestController

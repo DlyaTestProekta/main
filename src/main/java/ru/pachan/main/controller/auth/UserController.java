@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.pachan.main.dto.dictionary.PaginatedResponse;
 import ru.pachan.main.exception.data.RequestException;
 import ru.pachan.main.model.auth.User;
-import ru.pachan.main.service.auth.UserService;
+import ru.pachan.main.service.auth.user.UserService;
 
 @CrossOrigin
 @RestController

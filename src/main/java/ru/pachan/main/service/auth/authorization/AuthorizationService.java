@@ -1,4 +1,4 @@
-package ru.pachan.main.service.auth;
+package ru.pachan.main.service.auth.authorization;
 
 import ru.pachan.main.dto.auth.AuthorizationDto;
 import ru.pachan.main.dto.auth.RefreshDataDto;

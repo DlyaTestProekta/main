@@ -1,4 +1,4 @@
-package ru.pachan.main.service.reader;
+package ru.pachan.main.service.reader.notification;
 
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;

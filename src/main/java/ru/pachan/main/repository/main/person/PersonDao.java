@@ -4,7 +4,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ru.pachan.main.dto.dictionary.PaginatedResponse;
-import ru.pachan.main.model.main.PersonQueryBulder;
+import ru.pachan.main.model.main.PersonQueryBuilder;
 import ru.pachan.main.util.sql.OrderDirection;
 import ru.pachan.main.util.sql.SqlBuilderResult;
 import ru.pachan.main.util.sql.SqlQueryBuilder;
@@ -24,13 +24,13 @@ public class PersonDao {
     private static String FIRST_NAMES_QUERY =
             " AND (first_Name IN (:firstNames))";
 
-    private static final RowMapper<PersonQueryBulder> ROW_MAPPER = (rs, rowNum) ->
-            new PersonQueryBulder()
+    private static final RowMapper<PersonQueryBuilder> ROW_MAPPER = (rs, rowNum) ->
+            new PersonQueryBuilder()
                     .setId(rs.getInt("person_id"))
                     .setFirstName(rs.getString("first_Name"))
                     .setSurname(rs.getString("surname"));
 
-    private final SqlQueryBuilder<PersonQueryBulder> sqlQueryBuilder;
+    private final SqlQueryBuilder<PersonQueryBuilder> sqlQueryBuilder;
 
     public PersonDao(NamedParameterJdbcTemplate jdbcTemplate) {
         sqlQueryBuilder = new SqlQueryBuilder<>(BASE_QUERY, Map.of(
@@ -39,8 +39,8 @@ public class PersonDao {
         ), ROW_MAPPER, jdbcTemplate);
     }
 
-    public PaginatedResponse<PersonQueryBulder> getPersons(String firstName, List<String> firstNames) {
-        SqlBuilderResult<PersonQueryBulder> result = sqlQueryBuilder.execute(makeParams(firstName, firstNames), 1L, "personId", OrderDirection.DESC, true);
+    public PaginatedResponse<PersonQueryBuilder> getPersons(String firstName, List<String> firstNames) {
+        SqlBuilderResult<PersonQueryBuilder> result = sqlQueryBuilder.execute(makeParams(firstName, firstNames), 1L, "personId", OrderDirection.DESC, true);
         return new PaginatedResponse<>(result.getAmount(), result.getData());
     }
 

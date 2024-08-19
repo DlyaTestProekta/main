@@ -1,4 +1,4 @@
-package ru.pachan.main.service.auth;
+package ru.pachan.main.service.auth.authorization;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

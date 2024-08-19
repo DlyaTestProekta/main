@@ -1,4 +1,4 @@
-package ru.pachan.main.service.main;
+package ru.pachan.main.service.main.certificate;
 
 import org.springframework.data.domain.Pageable;
 import ru.pachan.main.dto.dictionary.PaginatedResponse;

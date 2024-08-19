@@ -1,4 +1,4 @@
-package ru.pachan.main.service.main;
+package ru.pachan.main.service.main.organization;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;

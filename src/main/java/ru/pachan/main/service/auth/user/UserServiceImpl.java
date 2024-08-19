@@ -1,4 +1,4 @@
-package ru.pachan.main.service.auth;
+package ru.pachan.main.service.auth.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

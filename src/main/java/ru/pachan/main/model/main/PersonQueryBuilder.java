@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @Entity
 @Table(name = "persons")
-public class PersonQueryBulder {
+public class PersonQueryBuilder {
 
     @Id
     @Column(name = "person_id")

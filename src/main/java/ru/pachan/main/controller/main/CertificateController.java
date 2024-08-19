@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.pachan.main.dto.dictionary.PaginatedResponse;
 import ru.pachan.main.exception.data.RequestException;
 import ru.pachan.main.model.main.Certificate;
-import ru.pachan.main.service.main.CertificateService;
+import ru.pachan.main.service.main.certificate.CertificateService;
 
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 

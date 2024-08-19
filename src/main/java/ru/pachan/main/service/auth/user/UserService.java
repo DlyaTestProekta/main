@@ -1,4 +1,4 @@
-package ru.pachan.main.service.auth;
+package ru.pachan.main.service.auth.user;
 
 import org.springframework.data.domain.Pageable;
 import ru.pachan.main.dto.dictionary.PaginatedResponse;

@@ -1,4 +1,4 @@
-package ru.pachan.main.service.main;
+package ru.pachan.main.service.main.person;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -10,7 +10,7 @@ import ru.pachan.main.dto.dictionary.PaginatedResponse;
 import ru.pachan.main.dto.main.PersonDto;
 import ru.pachan.main.exception.data.RequestException;
 import ru.pachan.main.model.main.Person;
-import ru.pachan.main.model.main.PersonQueryBulder;
+import ru.pachan.main.model.main.PersonQueryBuilder;
 import ru.pachan.main.repository.main.person.PersonDao;
 import ru.pachan.main.repository.main.person.PersonRepository;
 import ru.pachan.main.repository.main.person.PersonSpecification;
@@ -35,7 +35,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public PaginatedResponse<PersonQueryBulder> getAllWithSqlQueryBuilder(String firstName, List<String> firstNames) {
+    public PaginatedResponse<PersonQueryBuilder> getAllWithSqlQueryBuilder(String firstName, List<String> firstNames) {
         return personDao.getPersons(firstName, firstNames);
     }
 
