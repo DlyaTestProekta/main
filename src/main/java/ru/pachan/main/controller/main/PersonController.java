@@ -85,6 +85,5 @@ public class PersonController {
         } catch (Exception e) {
             return ResponseEntity.status(NO_CONTENT).build();
         }
-
     }
 }

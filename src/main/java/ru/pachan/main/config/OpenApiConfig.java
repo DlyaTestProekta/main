@@ -38,7 +38,10 @@ public class OpenApiConfig {
                                         .scheme("bearer")
                                         .bearerFormat("JWT")
                         )
-        ).info(info).servers(new ArrayList<>() {{ add(localServer); add(devServer); }});
+        ).info(info).servers(new ArrayList<>() {{
+            add(localServer);
+            add(devServer);
+        }});
     }
 
 }

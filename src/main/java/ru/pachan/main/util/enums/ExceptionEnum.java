@@ -31,4 +31,4 @@ public enum ExceptionEnum {
     NOT_VALID_QUERY_PARAMETERS("Неверные параметры запроса");
 
     private final String message;
-    }
+}

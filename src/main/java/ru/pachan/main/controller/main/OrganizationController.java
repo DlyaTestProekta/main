@@ -93,6 +93,5 @@ public class OrganizationController {
         } catch (Exception e) {
             return ResponseEntity.status(NO_CONTENT).build();
         }
-
     }
 }

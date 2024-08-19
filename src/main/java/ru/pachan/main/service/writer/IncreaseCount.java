@@ -12,7 +12,7 @@ public class IncreaseCount {
     private final KafkaTemplate<String, WriterDto> kafkaTemplate;
     private final String topicName;
 
-//    @Scheduled(initialDelay = 2000, fixedDelay = 1000)
+    //    @Scheduled(initialDelay = 2000, fixedDelay = 1000)
     public void increaseCount() {
         kafkaTemplate.send(topicName, new WriterDto(1L, 1));
     }

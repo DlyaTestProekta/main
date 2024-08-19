@@ -22,7 +22,7 @@ public class RequestLogger {
             ContentCachingResponseWrapper responseWrapper,
             RequestProvider requestProvider,
             String exceptionMessage
-    )  {
+    ) {
 
         StringBuilder message = new StringBuilder();
         message.append("\n");

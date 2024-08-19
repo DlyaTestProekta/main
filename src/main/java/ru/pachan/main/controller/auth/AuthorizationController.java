@@ -4,7 +4,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import ru.pachan.main.dto.auth.AuthorizationDto;
 import ru.pachan.main.dto.auth.RefreshDataDto;
 import ru.pachan.main.exception.data.RequestException;
@@ -39,5 +45,4 @@ class AuthorizationController {
     ) throws RequestException {
         return ResponseEntity.ok(service.refresh(authToken));
     }
-
 }
