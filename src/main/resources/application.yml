@@ -14,7 +14,7 @@ spring:
   boot:
     admin:
       client:
-        url: http://localhost:5004
+        url: http://${SPRING_ADMIN_HOST}:5004
         # от server
         username: ${SPRING_ADMIN_USER}
         password: ${SPRING_ADMIN_PASSWORD}
