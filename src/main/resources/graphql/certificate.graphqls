@@ -1,0 +1,19 @@
+type Query {
+    skills: [Skill]
+    skill(id: ID!): Skill!
+}
+
+type Mutation {
+    newSkill(skill: SkillInput!): Skill
+}
+
+input SkillInput {
+    name: String!
+    organizationId: Int
+}
+
+type Skill {
+    id: ID!
+    name: String!
+    persons: [Person]
+}
