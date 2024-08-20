@@ -14,6 +14,7 @@ val junitVer: String by project // 1.11.0-M2
 val protoCommonVer: String by project // 0.0.1
 val grpcVer: String by project // 3.1.0.RELEASE
 val jpamodelgenVer: String by project // 6.4.4.Final
+val graphQlTestVer: String by project // 1.3.2
 
 plugins {
 	java
@@ -39,7 +40,8 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web:$springBootStarterVer")
 	implementation("org.springframework.boot:spring-boot-starter-actuator:$springBootStarterVer")
 	implementation("org.springframework.boot:spring-boot-starter-data-redis:$springBootStarterVer")
-	implementation("de.codecentric:spring-boot-admin-starter-client:$springAdminVer")
+    implementation("org.springframework.boot:spring-boot-starter-graphql:$springBootStarterVer")
+    implementation("de.codecentric:spring-boot-admin-starter-client:$springAdminVer")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$openApiVer")
 	implementation("io.micrometer:micrometer-registry-prometheus:$micrometerPrometheusVer")
 	implementation("org.liquibase:liquibase-core:$liquibaseVer")
@@ -51,7 +53,8 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test:$springBootStarterVer")
 	testImplementation("org.springframework.kafka:spring-kafka-test:$kafkaVer")
 	testImplementation("org.springframework.security:spring-security-test:$springSecurityVer")
-	testRuntimeOnly("org.junit.platform:junit-platform-launcher:$junitVer")
+    testImplementation("org.springframework.graphql:spring-graphql-test:$graphQlTestVer")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:$junitVer")
 	compileOnly("org.projectlombok:lombok:$lombokVer")
 	annotationProcessor("org.projectlombok:lombok:$lombokVer")
 	// EXPLAIN_V Генерация класса Entity с полями для Criteria

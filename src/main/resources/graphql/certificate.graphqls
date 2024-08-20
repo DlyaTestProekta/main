@@ -1,19 +1,18 @@
 type Query {
-    skills: [Skill]
-    skill(id: ID!): Skill!
+    certificates: [Certificate]
+    certificate(id: ID!): Certificate!
 }
 
 type Mutation {
-    newSkill(skill: SkillInput!): Skill
+    newCertificate(certificateGraphQlDto: CertificateGraphQlDto!): Certificate
 }
 
-input SkillInput {
-    name: String!
-    organizationId: Int
+input CertificateGraphQlDto {
+    code: String!
 }
 
-type Skill {
+type Certificate {
     id: ID!
-    name: String!
-    persons: [Person]
+    code: String!
+    person: Person
 }

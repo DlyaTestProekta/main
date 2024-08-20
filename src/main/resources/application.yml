@@ -67,6 +67,9 @@ spring:
   cache:
     type: redis
     cache-names: redis-cache
+  graphql:
+    graphiql:
+      enabled: true
 
 server:
   port: 5001

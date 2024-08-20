@@ -3,7 +3,6 @@ package ru.pachan.main.security;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -61,7 +60,7 @@ public class RequestProvider {
             throw new RequestException(INVALID_TOKEN.getMessage(), FORBIDDEN);
         }
         List<String> path = Arrays.stream(httpServletRequest.getRequestURI().split("/")).filter(it -> !it.isBlank()).toList();
-        if (Objects.equals(path.get(2), "refresh")) {
+        if (Objects.equals(path.get(0), "graphql") || Objects.equals(path.get(2), "refresh")) {
             return;
         }
         Map<String, Short> permission = getPermission(token);
@@ -95,13 +94,14 @@ public class RequestProvider {
         }
     }
 
-    void adminCheck(String token, HttpServletRequest httpServletRequest) throws RequestException, JsonProcessingException {
+    void adminCheck(String token, HttpServletRequest httpServletRequest) throws RequestException {
         List<String> path = Arrays.stream(httpServletRequest.getRequestURI().split("/")).filter(it -> !it.isBlank()).toList();
-        if (!Objects.equals(path.get(1), "auth")) return;
+        // < 2 - проверка для graphQL
+        if (path.size() < 2 || !Objects.equals(path.get(1), "auth")) return;
 
         String payload = tokenSearcher.getPayload(token);
 
-        long userId = 0L;
+        long userId;
 
         try {
             userId = new ObjectMapper().readTree(payload).get("userId").asLong();

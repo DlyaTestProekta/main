@@ -1,4 +1,6 @@
 package ru.pachan.main.dto.main;
 
-public class CertificateGraphQlDto {
+public record CertificateGraphQlDto(
+        String code
+) {
 }
