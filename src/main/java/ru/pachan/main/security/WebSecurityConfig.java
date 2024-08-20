@@ -40,6 +40,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(it -> it
                         .requestMatchers("api/auth/**").hasAuthority("VerifiedToken")
                         .requestMatchers("actuator/**").hasAuthority("ActuatorAdmin")
+                        .requestMatchers("instances/**").hasAuthority("ActuatorAdmin")
                         .anyRequest().authenticated())
                 .addFilterBefore(
                         new JwtFilter(requestProvider, adminUsername, adminPassword),
@@ -65,7 +66,8 @@ public class WebSecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of(
-                "http://localhost:3000"
+                "http://localhost:3000",
+                "http://localhost:5004"
         ));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
 
