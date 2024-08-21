@@ -15,5 +15,6 @@ public class IncreaseCount {
     //    @Scheduled(initialDelay = 2000, fixedDelay = 1000)
     public void increaseCount() {
         kafkaTemplate.send(topicName, new WriterDto(1L, 1));
+        kafkaTemplate.send(topicName, new WriterDto(2L, 1));
     }
 }
