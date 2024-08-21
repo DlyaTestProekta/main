@@ -59,25 +59,23 @@ public class RequestProvider {
         if (token == null) {
             throw new RequestException(INVALID_TOKEN.getMessage(), FORBIDDEN);
         }
-        List<String> path = Arrays.stream(httpServletRequest.getRequestURI().split("/")).filter(it -> !it.isBlank()).toList();
-        if (Objects.equals(path.get(0), "graphql") || Objects.equals(path.get(2), "refresh")) {
-            return;
-        }
-        Map<String, Short> permission = getPermission(token);
-        // TODO сделать PUT
         try {
-            if (Objects.equals(httpServletRequest.getMethod(), HttpMethod.GET.name())) {
-                if ((path.size() == 3 || path.size() == 4) && permission.get(path.get(2)) < 1) {
-                    throw new RequestException(PERMISSION_DENIED.getMessage(), FORBIDDEN);
-                }
-            } else if (Objects.equals(httpServletRequest.getMethod(), HttpMethod.POST.name())) {
-                if (path.size() == 3 && permission.get(path.get(2)) < 2) {
-                    throw new RequestException(PERMISSION_DENIED.getMessage(), FORBIDDEN);
-                }
-            } else if (Objects.equals(httpServletRequest.getMethod(), HttpMethod.DELETE.name())) {
-                if (permission.get(path.get(2)) < 4) {
-                    throw new RequestException(PERMISSION_DENIED.getMessage(), FORBIDDEN);
-                }
+            List<String> path = Arrays.stream(httpServletRequest.getRequestURI().split("/")).filter(it -> !it.isBlank()).toList();
+            if (Objects.equals(path.get(0), "graphql") || Objects.equals(path.get(2), "refresh")) {
+                return;
+            }
+            Map<String, Short> permission = getPermission(token);
+            if (Objects.equals(httpServletRequest.getMethod(), HttpMethod.GET.name()) && permission.get(path.get(2)) < 1) {
+                throw new RequestException(PERMISSION_DENIED.getMessage(), FORBIDDEN);
+            }
+            if (Objects.equals(httpServletRequest.getMethod(), HttpMethod.POST.name()) && permission.get(path.get(2)) < 2) {
+                throw new RequestException(PERMISSION_DENIED.getMessage(), FORBIDDEN);
+            }
+            if (Objects.equals(httpServletRequest.getMethod(), HttpMethod.PUT.name()) && permission.get(path.get(2)) < 3) {
+                throw new RequestException(PERMISSION_DENIED.getMessage(), FORBIDDEN);
+            }
+            if (Objects.equals(httpServletRequest.getMethod(), HttpMethod.DELETE.name()) && permission.get(path.get(2)) < 4) {
+                throw new RequestException(PERMISSION_DENIED.getMessage(), FORBIDDEN);
             }
         } catch (NullPointerException e) {
             throw new RequestException(INVALID_TOKEN.getMessage(), FORBIDDEN);

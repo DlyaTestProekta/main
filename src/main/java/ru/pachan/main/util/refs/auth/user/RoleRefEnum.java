@@ -20,7 +20,8 @@ public enum RoleRefEnum {
             new Permission(DELETE.getId(), PERSON.getUname(), PERSON.getDescription()),
             new Permission(DELETE.getId(), ORGANIZATION.getUname(), ORGANIZATION.getDescription()),
             new Permission(DELETE.getId(), CERTIFICATE.getUname(), CERTIFICATE.getDescription()),
-            new Permission(DELETE.getId(), SKILL.getUname(), SKILL.getDescription())
+            new Permission(DELETE.getId(), SKILL.getUname(), SKILL.getDescription()),
+            new Permission(DELETE.getId(), NOTIFICATION.getUname(), NOTIFICATION.getDescription())
     ))),
     WORKER(new Role((short) 2, "Работник", Arrays.asList(
             new Permission(DELETE.getId(), ORGANIZATION.getUname(), ORGANIZATION.getDescription()),

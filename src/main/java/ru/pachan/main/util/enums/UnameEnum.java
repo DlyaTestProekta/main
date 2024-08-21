@@ -10,7 +10,8 @@ public enum UnameEnum {
     PERSON("person", "Сотрудник"),
     ORGANIZATION("organization", "Организация"),
     CERTIFICATE("certificate", "Удостоверение"),
-    SKILL("skill", "Умение");
+    SKILL("skill", "Умение"),
+    NOTIFICATION("notification", "Уведомление");
 
     private final String uname;
     private final String description;
