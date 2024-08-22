@@ -1,4 +1,4 @@
-package ru.pachan.main.model.auth;
+package ru.pachan.main.model.auth.rolePermissionPermissionLevel;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

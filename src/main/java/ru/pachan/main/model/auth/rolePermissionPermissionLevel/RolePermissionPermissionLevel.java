@@ -1,4 +1,4 @@
-package ru.pachan.main.model.auth;
+package ru.pachan.main.model.auth.rolePermissionPermissionLevel;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -6,6 +6,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
+import ru.pachan.main.model.auth.Permission;
+import ru.pachan.main.model.auth.PermissionLevel;
+import ru.pachan.main.model.auth.Role;
 
 @Entity
 @Table(name = "roles_permissions_permission_levels")

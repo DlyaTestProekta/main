@@ -14,6 +14,7 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import ru.pachan.main.model.auth.rolePermissionPermissionLevel.RolePermissionPermissionLevel;
 
 import java.util.List;
 
