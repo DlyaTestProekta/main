@@ -20,7 +20,7 @@ services:
     image: postgres:16
     restart: always
     ports:
-      - 5432:5432
+      - "5432:5432"
     #      - "5444:5432"
     environment:
       POSTGRES_USER: admindb # ${POSTGRES_USER}
@@ -31,7 +31,7 @@ services:
     container_name: grafana
     build: ./config/grafana
     ports:
-      - 3000:3000
+      - "3000:3000"
     volumes:
       - grafana_storage:/var/lib/grafana
     environment:
@@ -45,7 +45,7 @@ services:
     container_name: prometheus
     image: prom/prometheus
     ports:
-      - 9090:9090
+      - "9090:9090"
     volumes:
       - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus:/prometheus
@@ -65,7 +65,7 @@ services:
     image: confluentinc/cp-kafka:7.0.0
     container_name: broker
     ports:
-      - 9092:9092
+      - "9092:9092"
     depends_on:
       - zookeeper
     environment:
@@ -82,7 +82,7 @@ services:
     restart: always
     container_name: redis
     ports:
-      - 6379:6379
+      - "6379:6379"
     command: redis-server --save 20 1 --loglevel warning --requirepass UmVkaXNQYXNzd29yZA== # ${REDIS_PASSWORD} EXPLAIN_V в BASE64
     volumes:
       - cache:/data
