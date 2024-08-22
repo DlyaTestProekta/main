@@ -60,7 +60,7 @@ public class CertificateController {
     public ResponseEntity<Certificate> updateOne(
             @PathVariable long id,
             @Valid @RequestBody Certificate certificate
-    ) {
+    ) throws RequestException {
         return ResponseEntity.ok(service.updateOne(id, certificate));
     }
 

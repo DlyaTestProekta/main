@@ -9,51 +9,36 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 @Getter
 @Setter
 @ToString
 @Entity
-@Schema(description = "Пользователь")
-@Table(name = "users")
-public class User {
+@Schema(description = "Права пользователя")
+@Table(name = "permissions")
+public class Permission {
 
     @Column(nullable = false, unique = true)
-    private String login;
+    private String uname;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(nullable = false)
-    private String password;
+    private String description;
 
-    @Column(name = "fk_role_id")
-    long roleId;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(
-            name = "fk_role_id",
-            referencedColumnName = "role_id",
-            insertable = false,
-            updatable = false
-    )
+    @OneToMany(mappedBy = "permission", fetch = FetchType.EAGER)
     @JsonIgnore
     @ToString.Exclude
-    private Role role;
-
-    @OneToOne(mappedBy = "user", optional = false)
-    @JsonIgnore
-    @ToString.Exclude
-    private RefreshToken refreshToken;
+    private List<RolePermissionPermissionLevel> rolePermissionPermissionLevels;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "permission_id")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private long id;
 }

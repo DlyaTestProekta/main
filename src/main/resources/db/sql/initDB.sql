@@ -63,10 +63,10 @@ ALTER TABLE public.skills OWNER TO admindb;
 -- DROP TABLE IF EXISTS public.users CASCADE;
 CREATE TABLE public.users (
 	user_id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ,
-	role_id smallint NOT NULL,
+	fk_role_id bigint NOT NULL,
 	login text NOT NULL,
 	password text NOT NULL,
-	CONSTRAINT login_uq UNIQUE (login),
+	CONSTRAINT users_login_uq UNIQUE (login),
 	CONSTRAINT users_pk PRIMARY KEY (user_id)
 );
 -- ddl-end --
@@ -99,6 +99,57 @@ CREATE TABLE public.notifications (
 ALTER TABLE public.notifications OWNER TO admindb;
 -- ddl-end --
 
+-- object: public.permissions | type: TABLE --
+-- DROP TABLE IF EXISTS public.permissions CASCADE;
+CREATE TABLE public.permissions (
+	permission_id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ,
+	uname text NOT NULL,
+	description text NOT NULL,
+	CONSTRAINT permissions_pk PRIMARY KEY (permission_id),
+	CONSTRAINT permissions_uname_uq UNIQUE (uname)
+);
+-- ddl-end --
+ALTER TABLE public.permissions OWNER TO admindb;
+-- ddl-end --
+
+-- object: public.roles | type: TABLE --
+-- DROP TABLE IF EXISTS public.roles CASCADE;
+CREATE TABLE public.roles (
+	role_id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ,
+	name text NOT NULL,
+	CONSTRAINT roles_pk PRIMARY KEY (role_id),
+	CONSTRAINT roles_name_uq UNIQUE (name)
+);
+-- ddl-end --
+ALTER TABLE public.roles OWNER TO admindb;
+-- ddl-end --
+
+-- object: public.permission_levels | type: TABLE --
+-- DROP TABLE IF EXISTS public.permission_levels CASCADE;
+CREATE TABLE public.permission_levels (
+	permission_level_id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ,
+	permission_level smallint NOT NULL,
+	uname text NOT NULL,
+	CONSTRAINT permission_levels_pk PRIMARY KEY (permission_level_id),
+	CONSTRAINT permission_levels_permission_level_uq UNIQUE (permission_level),
+	CONSTRAINT permission_levels_uname_uq UNIQUE (uname)
+);
+-- ddl-end --
+ALTER TABLE public.permission_levels OWNER TO admindb;
+-- ddl-end --
+
+-- object: public.roles_permissions_permission_levels | type: TABLE --
+-- DROP TABLE IF EXISTS public.roles_permissions_permission_levels CASCADE;
+CREATE TABLE public.roles_permissions_permission_levels (
+	role_id bigint NOT NULL,
+	permission_id bigint NOT NULL,
+	permission_level_id bigint NOT NULL,
+	CONSTRAINT roles_permissions_permission_levels_pk PRIMARY KEY (role_id,permission_id,permission_level_id)
+);
+-- ddl-end --
+ALTER TABLE public.roles_permissions_permission_levels OWNER TO admindb;
+-- ddl-end --
+
 -- object: organization_id_fk | type: CONSTRAINT --
 -- ALTER TABLE public.persons DROP CONSTRAINT IF EXISTS organization_id_fk CASCADE;
 ALTER TABLE public.persons ADD CONSTRAINT organization_id_fk FOREIGN KEY (fk_organization_id)
@@ -127,9 +178,37 @@ REFERENCES public.skills (skill_id) MATCH SIMPLE
 ON DELETE CASCADE ON UPDATE CASCADE;
 -- ddl-end --
 
+-- object: role_id_fk | type: CONSTRAINT --
+-- ALTER TABLE public.users DROP CONSTRAINT IF EXISTS role_id_fk CASCADE;
+ALTER TABLE public.users ADD CONSTRAINT role_id_fk FOREIGN KEY (fk_role_id)
+REFERENCES public.roles (role_id) MATCH SIMPLE
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+-- ddl-end --
+
 -- object: user_id_fk | type: CONSTRAINT --
 -- ALTER TABLE public.refresh_tokens DROP CONSTRAINT IF EXISTS user_id_fk CASCADE;
 ALTER TABLE public.refresh_tokens ADD CONSTRAINT user_id_fk FOREIGN KEY (fk_user_id)
 REFERENCES public.users (user_id) MATCH SIMPLE
 ON DELETE NO ACTION ON UPDATE NO ACTION;
+-- ddl-end --
+
+-- object: role_id_fk | type: CONSTRAINT --
+-- ALTER TABLE public.roles_permissions_permission_levels DROP CONSTRAINT IF EXISTS role_id_fk CASCADE;
+ALTER TABLE public.roles_permissions_permission_levels ADD CONSTRAINT role_id_fk FOREIGN KEY (role_id)
+REFERENCES public.roles (role_id) MATCH SIMPLE
+ON DELETE CASCADE ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: permission_id_fk | type: CONSTRAINT --
+-- ALTER TABLE public.roles_permissions_permission_levels DROP CONSTRAINT IF EXISTS permission_id_fk CASCADE;
+ALTER TABLE public.roles_permissions_permission_levels ADD CONSTRAINT permission_id_fk FOREIGN KEY (permission_id)
+REFERENCES public.permissions (permission_id) MATCH SIMPLE
+ON DELETE CASCADE ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: permission_level_id_fk | type: CONSTRAINT --
+-- ALTER TABLE public.roles_permissions_permission_levels DROP CONSTRAINT IF EXISTS permission_level_id_fk CASCADE;
+ALTER TABLE public.roles_permissions_permission_levels ADD CONSTRAINT permission_level_id_fk FOREIGN KEY (permission_level_id)
+REFERENCES public.permission_levels (permission_level_id) MATCH SIMPLE
+ON DELETE CASCADE ON UPDATE CASCADE;
 -- ddl-end --

@@ -10,6 +10,7 @@ import ru.pachan.main.exception.data.RequestException;
 import ru.pachan.main.model.main.Certificate;
 import ru.pachan.main.repository.main.CertificateRepository;
 
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static ru.pachan.main.util.enums.ExceptionEnum.OBJECT_NOT_FOUND;
 
 @RequiredArgsConstructor
@@ -37,9 +38,11 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public Certificate updateOne(long id, Certificate certificate) {
-        certificate.setId(id);
-        return repository.save(certificate);
+    public Certificate updateOne(long id, Certificate certificate) throws RequestException {
+        Certificate oldCertificate = repository.findById(id).orElseThrow(() ->
+                new RequestException(OBJECT_NOT_FOUND.getMessage(), UNAUTHORIZED));
+        oldCertificate.setCode(certificate.getCode());
+        return repository.save(oldCertificate);
     }
 
     @Override

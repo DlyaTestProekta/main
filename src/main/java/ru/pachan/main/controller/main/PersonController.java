@@ -69,7 +69,7 @@ public class PersonController {
     public ResponseEntity<Person> updateOne(
             @PathVariable long id,
             @Valid @RequestBody Person person
-    ) {
+    ) throws RequestException {
         return ResponseEntity.ok(service.updateOne(id, person));
     }
 

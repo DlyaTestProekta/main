@@ -10,18 +10,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import ru.pachan.main.exception.data.RequestException;
+import ru.pachan.main.repository.auth.PermissionLevelRepository;
 import ru.pachan.main.repository.auth.UserRepository;
 import ru.pachan.main.util.auth.TokenSearcher;
-import ru.pachan.main.util.refs.auth.user.RoleRefEnum;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import static org.springframework.http.HttpStatus.*;
 import static ru.pachan.main.util.enums.ExceptionEnum.*;
-import static ru.pachan.main.util.refs.auth.user.RoleRefEnum.ADMIN;
 
 @RequiredArgsConstructor
 @Component
@@ -32,6 +30,7 @@ public class RequestProvider {
 
     private final UserRepository userRepository;
     private final TokenSearcher tokenSearcher;
+    private final PermissionLevelRepository permissionLevelRepository;
 
     public String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
@@ -64,17 +63,17 @@ public class RequestProvider {
             if (Objects.equals(path.get(0), "graphql") || Objects.equals(path.get(2), "refresh")) {
                 return;
             }
-            Map<String, Short> permission = getPermission(token);
-            if (Objects.equals(httpServletRequest.getMethod(), HttpMethod.GET.name()) && permission.get(path.get(2)) < 1) {
+            Short permission = getPermission(token, path.get(2));
+            if (Objects.equals(httpServletRequest.getMethod(), HttpMethod.GET.name()) && permission < 1) {
                 throw new RequestException(PERMISSION_DENIED.getMessage(), FORBIDDEN);
             }
-            if (Objects.equals(httpServletRequest.getMethod(), HttpMethod.POST.name()) && permission.get(path.get(2)) < 2) {
+            if (Objects.equals(httpServletRequest.getMethod(), HttpMethod.POST.name()) && permission < 2) {
                 throw new RequestException(PERMISSION_DENIED.getMessage(), FORBIDDEN);
             }
-            if (Objects.equals(httpServletRequest.getMethod(), HttpMethod.PUT.name()) && permission.get(path.get(2)) < 3) {
+            if (Objects.equals(httpServletRequest.getMethod(), HttpMethod.PUT.name()) && permission < 3) {
                 throw new RequestException(PERMISSION_DENIED.getMessage(), FORBIDDEN);
             }
-            if (Objects.equals(httpServletRequest.getMethod(), HttpMethod.DELETE.name()) && permission.get(path.get(2)) < 4) {
+            if (Objects.equals(httpServletRequest.getMethod(), HttpMethod.DELETE.name()) && permission < 4) {
                 throw new RequestException(PERMISSION_DENIED.getMessage(), FORBIDDEN);
             }
         } catch (NullPointerException e) {
@@ -82,11 +81,13 @@ public class RequestProvider {
         }
     }
 
-    Map<String, Short> getPermission(String token) throws RequestException {
+    Short getPermission(String token, String uname) throws RequestException {
         String payload = tokenSearcher.getPayload(token);
-
         try {
-            return RoleRefEnum.getPermissionsByRoleId(new ObjectMapper().readTree(payload).get("roleId").shortValue());
+            return permissionLevelRepository.findPermissionLevelByRoleIdAndPermissionUname(
+                    new ObjectMapper().readTree(payload).get("roleId").longValue(),
+                    uname
+            );
         } catch (Throwable e) {
             throw new RequestException(SYSTEM_ERROR.getMessage(), INTERNAL_SERVER_ERROR);
         }
@@ -121,9 +122,9 @@ public class RequestProvider {
             throw new RequestException(INVALID_PATH.getMessage(), INTERNAL_SERVER_ERROR);
         }
 
-        if (userRepository.findById(userId).orElseThrow(() ->
+        if (!Objects.equals(userRepository.findById(userId).orElseThrow(() ->
                 new RequestException(USER_IS_MISSING.getMessage(), UNAUTHORIZED)
-        ).getRoleId() != ADMIN.getRole().id()
+        ).getRole().getName(), "admin")
         ) throw new RequestException(PERMISSION_DENIED.getMessage(), FORBIDDEN);
 
     }

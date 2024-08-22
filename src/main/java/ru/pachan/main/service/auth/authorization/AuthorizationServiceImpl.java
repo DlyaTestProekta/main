@@ -119,7 +119,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         try {
             newToken = JWT.create()
                     .withClaim("userId", foundUser.getId())
-                    .withClaim("roleId", Integer.valueOf(foundUser.getRoleId()))
+                    .withClaim("roleId", foundUser.getRoleId())
                     .withIssuedAt(new Date())
                     // TODO переделать депрекейтед
                     .withExpiresAt(new Date(System.currentTimeMillis() + Long.parseLong(accessTime))).sign(

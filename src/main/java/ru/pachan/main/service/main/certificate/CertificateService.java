@@ -13,7 +13,7 @@ public interface CertificateService {
 
     Certificate createOne(Certificate certificate);
 
-    Certificate updateOne(long id, Certificate certificate);
+    Certificate updateOne(long id, Certificate certificate) throws RequestException;
 
     void deleteOne(long id);
 

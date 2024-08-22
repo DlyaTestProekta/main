@@ -77,7 +77,7 @@ public class OrganizationController {
     public ResponseEntity<Organization> updateOne(
             @PathVariable long id,
             @Valid @RequestBody Organization organization
-    ) {
+    ) throws RequestException {
         return ResponseEntity.ok(service.updateOne(id, organization));
     }
 

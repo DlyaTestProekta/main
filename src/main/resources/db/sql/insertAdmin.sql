@@ -1,4 +1,4 @@
-INSERT INTO users (role_id, login, password)
+INSERT INTO users (fk_role_id, login, password)
 VALUES(1, 'admin', '$2a$10$2wggeB6Xl0tnHnMMOdd4vuANO/xcxd/h2iAZJCev48kgZ/gOeZMk.')
 ON CONFLICT (login) DO NOTHING;
 

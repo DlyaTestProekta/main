@@ -21,7 +21,7 @@ public interface PersonService {
 
     Person createOne(Person person);
 
-    Person updateOne(long id, Person person);
+    Person updateOne(long id, Person person) throws RequestException;
 
     void deleteOne(long id);
 

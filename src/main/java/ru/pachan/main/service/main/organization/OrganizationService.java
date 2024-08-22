@@ -18,7 +18,7 @@ public interface OrganizationService {
 
     Organization createOne(Organization organization);
 
-    Organization updateOne(long id, Organization organization);
+    Organization updateOne(long id, Organization organization) throws RequestException;
 
     void deleteOne(long id);
 

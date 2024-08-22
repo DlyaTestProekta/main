@@ -7,11 +7,11 @@ import ru.pachan.main.exception.data.RequestException;
 import ru.pachan.main.repository.auth.UserRepository;
 
 import java.util.Base64;
+import java.util.Objects;
 
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static ru.pachan.main.util.enums.ExceptionEnum.*;
-import static ru.pachan.main.util.refs.auth.user.RoleRefEnum.ADMIN;
 
 @RequiredArgsConstructor
 @Component
@@ -20,9 +20,9 @@ public class TokenSearcher {
     private final UserRepository userRepository;
 
     public boolean isAdmin(String token) throws RequestException {
-        return userRepository.findById(Long.parseLong(getPayloadField(token, "userId"))).orElseThrow(() ->
+        return !Objects.equals(userRepository.findById(Long.parseLong(getPayloadField(token, "userId"))).orElseThrow(() ->
                 new RequestException(USER_IS_MISSING.getMessage(), UNAUTHORIZED)
-        ).getRoleId() == ADMIN.getRole().id();
+        ).getRole().getName(), "admin");
 
     }
 

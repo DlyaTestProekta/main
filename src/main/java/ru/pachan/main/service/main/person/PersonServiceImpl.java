@@ -17,6 +17,7 @@ import ru.pachan.main.repository.main.person.PersonSpecification;
 
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static ru.pachan.main.util.enums.ExceptionEnum.OBJECT_NOT_FOUND;
 
 @RequiredArgsConstructor
@@ -61,9 +62,14 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Person updateOne(long id, Person person) {
-        person.setId(id);
-        return repository.save(person);
+    public Person updateOne(long id, Person person) throws RequestException {
+        Person oldPerson = repository.findById(id).orElseThrow(() ->
+                new RequestException(OBJECT_NOT_FOUND.getMessage(), UNAUTHORIZED));
+        oldPerson.setFirstName(person.getFirstName());
+        oldPerson.setSurname(person.getSurname());
+        oldPerson.setSalaryRub(person.getSalaryRub());
+        oldPerson.setHobby(person.getHobby());
+        return repository.save(oldPerson);
     }
 
     @Override

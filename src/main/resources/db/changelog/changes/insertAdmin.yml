@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
-      id: createAdmin
+      id: insertAdmin
       author: BornToNight
       changes:
         - sqlFile:
-            path: db/sql/createAdmin.sql
+            path: db/sql/insertAdmin.sql

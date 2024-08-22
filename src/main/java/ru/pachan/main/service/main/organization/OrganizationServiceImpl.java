@@ -18,6 +18,7 @@ import ru.pachan.main.repository.main.OrganizationRepository;
 
 import java.util.stream.Collectors;
 
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static ru.pachan.main.util.enums.ExceptionEnum.OBJECT_NOT_FOUND;
 
 @RequiredArgsConstructor
@@ -96,9 +97,11 @@ public class OrganizationServiceImpl implements OrganizationService {
             evict = @CacheEvict(value = "OrganizationService::getAll", allEntries = true)
     )
     @Override
-    public Organization updateOne(long id, Organization organization) {
-        organization.setId(id);
-        return repository.save(organization);
+    public Organization updateOne(long id, Organization organization) throws RequestException {
+        Organization oldOrganization = repository.findById(id).orElseThrow(() ->
+                new RequestException(OBJECT_NOT_FOUND.getMessage(), UNAUTHORIZED));
+        oldOrganization.setName(organization.getName());
+        return repository.save(oldOrganization);
     }
 
     @Override
