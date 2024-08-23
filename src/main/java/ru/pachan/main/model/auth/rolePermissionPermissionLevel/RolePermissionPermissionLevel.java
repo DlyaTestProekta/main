@@ -2,6 +2,7 @@ package ru.pachan.main.model.auth.rolePermissionPermissionLevel;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
@@ -17,20 +18,19 @@ public class RolePermissionPermissionLevel {
     @EmbeddedId
     private RolePermissionPermissionLevelId id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("roleId")
     @JoinColumn(name = "role_id")
     private Role role;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("permissionId")
     @JoinColumn(name = "permission_id")
     private Permission permission;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("permissionLevelId")
     @JoinColumn(name = "permission_level_id")
     private PermissionLevel permissionLevel;
-
 
 }

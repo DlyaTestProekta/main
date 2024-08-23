@@ -14,6 +14,8 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import ru.pachan.main.model.auth.rolePermissionPermissionLevel.RolePermissionPermissionLevel;
 
 import java.util.List;
@@ -36,6 +38,7 @@ public class Role {
     private Set<User> users;
 
     @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     @JsonIgnore
     @ToString.Exclude
     private List<RolePermissionPermissionLevel> rolePermissionPermissionLevels;

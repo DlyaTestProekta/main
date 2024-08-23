@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static org.springframework.http.HttpStatus.*;
+import static ru.pachan.main.util.auth.TokenSearcher.ADMIN;
 import static ru.pachan.main.util.enums.ExceptionEnum.*;
 
 @RequiredArgsConstructor
@@ -124,7 +125,7 @@ public class RequestProvider {
 
         if (!Objects.equals(userRepository.findById(userId).orElseThrow(() ->
                 new RequestException(USER_IS_MISSING.getMessage(), UNAUTHORIZED)
-        ).getRole().getName(), "admin")
+        ).getRole().getName(), ADMIN)
         ) throw new RequestException(PERMISSION_DENIED.getMessage(), FORBIDDEN);
 
     }

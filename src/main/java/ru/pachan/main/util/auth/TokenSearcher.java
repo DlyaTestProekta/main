@@ -17,12 +17,14 @@ import static ru.pachan.main.util.enums.ExceptionEnum.*;
 @Component
 public class TokenSearcher {
 
+    public static String ADMIN = "admin";
+
     private final UserRepository userRepository;
 
     public boolean isAdmin(String token) throws RequestException {
         return !Objects.equals(userRepository.findById(Long.parseLong(getPayloadField(token, "userId"))).orElseThrow(() ->
                 new RequestException(USER_IS_MISSING.getMessage(), UNAUTHORIZED)
-        ).getRole().getName(), "admin");
+        ).getRole().getName(), ADMIN);
 
     }
 
