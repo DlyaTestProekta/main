@@ -1,29 +1,47 @@
 package ru.pachan.main;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.graphql.tester.AutoConfigureGraphQlTester;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.graphql.test.tester.GraphQlTester;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import ru.pachan.main.model.main.Certificate;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+@Testcontainers
 @AutoConfigureGraphQlTester
 public class CertificateGraphQlControllerTest {
 
     @Autowired
     private GraphQlTester tester;
 
-    @Disabled
+    @Container
+    static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:16")
+            .withUsername(System.getenv("POSTGRES_USER"))
+            .withPassword(System.getenv("POSTGRES_PASSWORD"));
+
+    @DynamicPropertySource
+    static void postgresqlProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.datasource.url", postgreSQLContainer::getJdbcUrl);
+        registry.add("spring.datasource.password", postgreSQLContainer::getPassword);
+    }
+
     @Test()
+    @DisplayName("Add certificate with GraphQL")
     void addCertificate() {
         String query = """
                 mutation {
-                  newCertificate(certificateGraphQlDto: { code: "codeTest" }) {
+                  newCertificate(certificateGraphQlDto: { code: "codeTestGraphQl" }) {
                     id
                     code
                   }
@@ -33,12 +51,12 @@ public class CertificateGraphQlControllerTest {
                 .path("data.newCertificate")
                 .entity(Certificate.class)
                 .get();
-        Assertions.assertNotNull(certificate);
-        Assertions.assertEquals("codeTest", certificate.getCode());
+        assertNotNull(certificate);
+        assertEquals("codeTestGraphQl", certificate.getCode());
     }
 
-    @Disabled
     @Test
+    @DisplayName("Get all certificates with GraphQL")
     void findAll() {
         String query = """
                 {
@@ -56,12 +74,14 @@ public class CertificateGraphQlControllerTest {
                 .path("data.certificates[*]")
                 .entityList(Certificate.class)
                 .get();
-        Assertions.assertFalse(certificates.isEmpty());
-        Assertions.assertNotNull(certificates.getFirst().getCode());
+        assertFalse(certificates.isEmpty());
+        assertEquals(1, certificates.size());
+        assertEquals("codeTestGraphQl", certificates.getFirst().getCode());
+        assertNull(certificates.getFirst().getPerson());
     }
 
-    @Disabled
     @Test
+    @DisplayName("Get certificate by Id with GraphQL")
     void findById() {
         String query = """
                   {
@@ -75,8 +95,8 @@ public class CertificateGraphQlControllerTest {
                 .path("data.certificate")
                 .entity(Certificate.class)
                 .get();
-        Assertions.assertNotNull(certificate);
-        Assertions.assertNotNull(certificate.getCode());
+        assertNotNull(certificate);
+        assertEquals("codeTestGraphQl", certificate.getCode());
     }
 
 }
