@@ -52,7 +52,7 @@ class CertificatesIntegrationTest {
     @Container
     static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:16")
             .withUsername(System.getenv("POSTGRES_USER"))
-            .withPassword(System.getenv("POSTGRES_PASSWORD"));
+            .withPassword("password");
 
     @DynamicPropertySource
     static void postgresqlProperties(DynamicPropertyRegistry registry) {

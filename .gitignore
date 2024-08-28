@@ -40,5 +40,5 @@ out/
 *.log
 .env
 
-/scripts/grafana/
-/scripts/prometheus/
+/grafana/
+/prometheus/

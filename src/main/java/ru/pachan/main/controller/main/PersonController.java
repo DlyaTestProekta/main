@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 @RestController
 @RequestMapping("api/main/person")
 @Tag(name = "Person")
+@Slf4j
 public class PersonController {
 
     private final PersonService service;
@@ -45,6 +47,8 @@ public class PersonController {
             @Parameter(description = "Фильтр по именам сотрудника")
             @RequestParam(required = false) List<String> firstNames
     ) {
+        // EXPLAIN_V Пример для сохранения в elastic
+        log.info("PersonController getAll");
         return ResponseEntity.ok(service.getAll(pageable, firstName, firstNames));
     }
 

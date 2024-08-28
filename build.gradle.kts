@@ -52,6 +52,7 @@ dependencies {
     implementation("net.devh:grpc-client-spring-boot-starter:$grpcVer")
 //	EXPLAIN_V Для интеграционных тестов
     implementation("org.springframework.boot:spring-boot-starter-webflux:$springBootStarterVer")
+    implementation("net.logstash.logback:logstash-logback-encoder:8.0")
     annotationProcessor("org.projectlombok:lombok:$lombokVer")
     annotationProcessor("org.hibernate:hibernate-jpamodelgen:$jpamodelgenVer")
     // EXPLAIN_V Генерация класса Entity с полями для Criteria

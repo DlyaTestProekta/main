@@ -23,7 +23,13 @@ public class RequestLogger {
             RequestProvider requestProvider,
             String exceptionMessage
     ) {
-
+        if (requestWrapper.getRequestURI().contains("actuator")) {
+            try {
+                responseWrapper.copyBodyToResponse(); // EXPLAIN_V вернуть бади респонса
+            } catch (IOException ignored) {
+            }
+            return;
+        }
         StringBuilder message = new StringBuilder();
         message.append("\n");
         message.append(requestWrapper.getMethod()).append(" ").append(responseWrapper.getStatus());
