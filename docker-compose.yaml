@@ -93,18 +93,12 @@ services:
     container_name: elasticsearch_spring
     image: elasticsearch:8.15.0
     environment:
-#      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-}
       ES_JAVA_OPTS: -Xms512m -Xmx512m
       discovery.type: single-node
       node.name: elasticsearch
-#      ELASTIC_USERNAME: ${ELASTIC_USER}
-#      bootstrap.memory_lock: true
       xpack.security.enabled: false
     ports:
       - "9200:9200"
-#    volumes:
-#      - ./config/elk/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
-#      - elasticsearch:/usr/share/elasticsearch/data:Z
     networks:
       - elk
 
@@ -113,10 +107,6 @@ services:
     image: kibana:8.15.0
     ports:
       - "5601:5601"
-#    volumes:
-#      - ./config/elk/kibana.yml:/usr/share/kibana/config/kibana.yml:ro,Z
-#    environment:
-#      KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD:-}
     depends_on:
       - elasticsearch
     networks:
@@ -126,8 +116,8 @@ services:
     container_name: logstash_spring
     image: logstash:8.15.0
     volumes:
-      - ./config/elk/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml
-      - ./config/elk/logstash/pipeline:/usr/share/logstash/pipeline
+      - ./config/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml
+      - ./config/logstash/pipeline:/usr/share/logstash/pipeline
     ports:
       - "5044:5044"
       - "5000:5000/tcp"
@@ -136,7 +126,6 @@ services:
     environment:
       LOG_LEVEL: debug
       LS_JAVA_OPTS: -Xms256m -Xmx256m
-#      LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD:-}
     networks:
       - elk
     depends_on:
