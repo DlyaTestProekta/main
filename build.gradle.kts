@@ -16,6 +16,7 @@ val grpcVer: String by project // 3.1.0.RELEASE
 val jpamodelgenVer: String by project // 6.4.4.Final
 val graphQlTestVer: String by project // 1.3.2
 val testcontainersJunitVer: String by project // 1.20.0
+val logstashEncoderVer: String by project // 8.0
 
 plugins {
     java
@@ -52,7 +53,7 @@ dependencies {
     implementation("net.devh:grpc-client-spring-boot-starter:$grpcVer")
 //	EXPLAIN_V Для интеграционных тестов
     implementation("org.springframework.boot:spring-boot-starter-webflux:$springBootStarterVer")
-    implementation("net.logstash.logback:logstash-logback-encoder:8.0")
+    implementation("net.logstash.logback:logstash-logback-encoder:$logstashEncoderVer")
     annotationProcessor("org.projectlombok:lombok:$lombokVer")
     annotationProcessor("org.hibernate:hibernate-jpamodelgen:$jpamodelgenVer")
     // EXPLAIN_V Генерация класса Entity с полями для Criteria

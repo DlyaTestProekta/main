@@ -6,6 +6,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,15 +23,19 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.Objects;
+import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @RequiredArgsConstructor
+@Slf4j
 public class JwtFilter extends OncePerRequestFilter {
 
     private final RequestProvider requestProvider;
     private final String adminUsername;
     private final String adminPassword;
+
+    private static final String REQUEST_ID = "requestId";
 
     @Override
     protected void doFilterInternal(
@@ -40,6 +46,12 @@ public class JwtFilter extends OncePerRequestFilter {
         ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper(request);
         ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper(response);
 
+        String requestId = request.getHeader(REQUEST_ID);
+        if (requestId == null) {
+            requestId = UUID.randomUUID().toString();
+        }
+
+        MDC.put(REQUEST_ID, requestId);
 
         if (request.getRequestURI().startsWith("/actuator")) {
             String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
@@ -84,5 +96,6 @@ public class JwtFilter extends OncePerRequestFilter {
         }
         filterChain.doFilter(requestWrapper, responseWrapper);
         RequestLogger.writeSlf4jLog(requestWrapper, responseWrapper, requestProvider, "");
+        MDC.clear();
     }
 }
