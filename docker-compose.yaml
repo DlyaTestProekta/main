@@ -45,11 +45,14 @@ services:
 
   prometheus:
     container_name: prometheus
-    image: prom/prometheus
+    build:
+      context: config/prometheus
+      args:
+        SPRING_USER: ${SPRING_USER}
+        SPRING_PASSWORD: ${SPRING_PASSWORD}
     ports:
       - "9090:9090"
     volumes:
-      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus:/prometheus
     networks:
       monitoring:

@@ -5,5 +5,5 @@ scrape_configs:
     static_configs:
       - targets: [ 'host.docker.internal:5001', 'host.docker.internal:5002', 'host.docker.internal:5003', 'host.docker.internal:5004' ]
     basic_auth:
-      username: "userAdmin"
-      password: "passwordAdmin"
+      username: ${SPRING_USER}
+      password: ${SPRING_PASSWORD}
