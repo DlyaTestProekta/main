@@ -26,7 +26,7 @@ spec:
       maxSurge: 1
       maxUnavailable: 1
     type: RollingUpdate
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: main
@@ -136,4 +136,19 @@ spec:
                 secretKeyRef:
                   name: my-secret
                   key: LOGSTASH_HOST
+            - name: SWAGGER_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: my-secret
+                  key: SWAGGER_HOST
+            - name: TASK_INCREASE_COUNT_DELAY
+              valueFrom:
+                secretKeyRef:
+                  name: my-secret
+                  key: TASK_INCREASE_COUNT_DELAY
+            - name: TASK_INCREASE_COUNT_INITIAL_DELAY
+              valueFrom:
+                secretKeyRef:
+                  name: my-secret
+                  key: TASK_INCREASE_COUNT_INITIAL_DELAY
 

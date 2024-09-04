@@ -52,6 +52,8 @@ dependencies {
 //	EXPLAIN_V Для интеграционных тестов
     implementation("org.springframework.boot:spring-boot-starter-webflux:$springBootStarterVer")
     implementation("net.logstash.logback:logstash-logback-encoder:$logstashEncoderVer")
+    implementation("net.javacrumbs.shedlock:shedlock-spring:5.15.1")
+    implementation("net.javacrumbs.shedlock:shedlock-provider-jdbc-template:5.15.1")
     annotationProcessor("org.projectlombok:lombok:$lombokVer")
     annotationProcessor("org.hibernate:hibernate-jpamodelgen:$jpamodelgenVer")
     // EXPLAIN_V Генерация класса Entity с полями для Criteria

@@ -2,6 +2,12 @@ application:
   kafka:
     topic: ${KAFKA_TOPIC}
 
+task:
+  schedule:
+    increase-count:
+      delay: ${TASK_INCREASE_COUNT_DELAY}
+      initialDelay: ${TASK_INCREASE_COUNT_INITIAL_DELAY}
+
 spring:
   application:
     name: main

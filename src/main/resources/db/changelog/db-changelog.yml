@@ -9,3 +9,5 @@ databaseChangeLog:
       file: db/changelog/changes/createIndexPersonsForFirstName.yml
   - include:
       file: db/changelog/changes/createIndexPermissionsForUname.yml
+  - include:
+      file: db/changelog/changes/createShedlockTable.yml
