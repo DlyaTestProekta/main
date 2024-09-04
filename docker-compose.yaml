@@ -7,15 +7,16 @@ volumes:
 
 services:
 
-  #  app:
-  #    build:
-  #      context: .
-  #    container_name: main
-  #    depends_on:
-  #      - postgres
-  #    env_file:
-  #      - .env
-  #    ports: 5001:5001
+#  main:
+#    build:
+#      context: .
+#    container_name: main
+#    depends_on:
+#      - postgres
+#    env_file:
+#      - .env
+#    ports:
+#      - "5001:5001"
 
   postgres:
     container_name: postgres

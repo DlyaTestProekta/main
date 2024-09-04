@@ -19,6 +19,7 @@ spring:
         username: ${SPRING_ADMIN_USER}
         password: ${SPRING_ADMIN_PASSWORD}
         instance:
+          prefer-ip: true
           metadata:
             # от server
             user:
@@ -85,6 +86,8 @@ management:
       exposure:
         include: "*" # EXPLAIN_V Открыть у актуатора больше запросов для метрик
   metrics:
+    tags:
+      application: ${spring.application.name}
     export:
       prometheus:
         enabled: true
@@ -102,7 +105,7 @@ logging:
             bind: TRACE
 
 openapi:
-  local-url: http://localhost:5001
+  local-url: http://${SWAGGER_HOST}
   dev-url: http://162.16.20.80:5001
 
 springdoc:
@@ -129,7 +132,7 @@ grpc:
     GLOBAL:
       negotiationType: PLAINTEXT
     reader-server:
-      address: static://${GRPC_HOST}:5005
+      address: static://${GRPC_HOST}:5002
 
 ---
 

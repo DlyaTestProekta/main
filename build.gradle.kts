@@ -3,10 +3,8 @@ val springSecurityVer: String by project // 6.2.3
 val springAdminVer: String by project // 3.2.3
 val postgreSQLVer: String by project // 42.7.3
 val liquibaseVer: String by project // 4.26.0
-//val jacksonVer: String by project // 2.17.0
 val openApiVer: String by project // 2.4.0
 val javaJwtVer: String by project // 4.4.0
-//val jsonVer: String by project // 20240303
 val micrometerPrometheusVer: String by project // 1.12.4
 val lombokVer: String by project // 1.18.32
 val kafkaVer: String by project // 3.2.0
