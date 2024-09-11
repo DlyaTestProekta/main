@@ -137,7 +137,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
         // ATTENTION Мб переделать
         if (user != null) {
-            return new RefreshDataDto(userRefreshToken.getRefreshToken(), newToken, user.getRoleId(), user.getRoleId());
+            return new RefreshDataDto(userRefreshToken.getRefreshToken(), newToken, user.getRoleId(), user.getId());
 
         } else {
             return new RefreshDataDto(userRefreshToken.getRefreshToken(), newToken, 0, 0);

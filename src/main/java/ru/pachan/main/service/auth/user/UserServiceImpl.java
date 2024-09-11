@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserService {
         User savedUser = repository.save(user);
         RefreshToken refreshToken = new RefreshToken();
         refreshToken.setUser(savedUser);
+        refreshToken.setRefreshToken("emptyToken");
         refreshTokenRepository.save(refreshToken);
         return savedUser;
     }

@@ -4,6 +4,6 @@ public record RefreshDataDto(
         String refresh,
         String token,
         long roleId,
-        long id
+        long userId
 ) {
 }
