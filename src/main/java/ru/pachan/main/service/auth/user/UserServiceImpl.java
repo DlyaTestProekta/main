@@ -62,7 +62,6 @@ public class UserServiceImpl implements UserService {
         }
         if (tokenSearcher.isAdmin(token)) {
             if (!user.getPassword().isBlank()) {
-                // TODO переделать на новый
                 user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
             } else {
                 user.setPassword(old.getPassword());
@@ -84,6 +83,5 @@ public class UserServiceImpl implements UserService {
             }
         }
     }
-
 
 }

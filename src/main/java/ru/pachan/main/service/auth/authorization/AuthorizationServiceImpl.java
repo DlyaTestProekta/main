@@ -38,14 +38,11 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     private final TokenSearcher tokenSearcher;
 
     public RefreshDataDto generate(AuthorizationDto authorizationDto) throws RequestException {
-        User user = validateUser("",
-                userRepository.findByLogin(authorizationDto.login()).orElseThrow(() ->
-                        new RequestException(
-                                OBJECT_NOT_FOUND.getMessage(),
-                                GONE
-                        ))
-        );
-        // TODO переделать на новое
+        User user = userRepository.findByLogin(authorizationDto.login()).orElseThrow(() ->
+                new RequestException(
+                        OBJECT_NOT_FOUND.getMessage(),
+                        GONE
+                ));
         if (new BCryptPasswordEncoder().matches(authorizationDto.password(), user.getPassword())) {
             return generateJWT(user, null);
         } else {
@@ -65,30 +62,19 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         try {
             if (token != null && !token.isBlank()) {
                 refreshEntry = refreshTokenRepository.findByRefreshToken(token.split(" ")[1]).orElseThrow(NullPointerException::new);
-            } else {
-                throw new NullPointerException();
             }
-        } catch (NullPointerException ignored) {
         } catch (Throwable e) {
             throw new RequestException(EXPIRED_OR_INVALID_TOKEN.getMessage(), UNAUTHORIZED);
         }
 
-        User foundUser;
-        if (user == null) {
-            foundUser = validateUser(token, null);
-        } else {
-            foundUser = user;
-        }
+        User foundUser = findUser(token, user);
 
-        // ATTENTION понять почему не надо
-        String refreshToken = "";
+        String refreshToken;
 
-        // TODO сделать что-то с NULL
         try {
             refreshToken = JWT.create()
                     .withClaim("userId", foundUser.getId())
                     .withIssuedAt(new Date())
-                    // TODO переделать депрекейтед
                     .withExpiresAt(new Date(System.currentTimeMillis() + Long.parseLong(refreshTime))).sign(
                             Algorithm.HMAC256(key)
                     );
@@ -114,14 +100,13 @@ public class AuthorizationServiceImpl implements AuthorizationService {
             refreshEntry.setRefreshToken(refreshToken);
         }
 
-        String newToken = "";
+        String newToken;
 
         try {
             newToken = JWT.create()
                     .withClaim("userId", foundUser.getId())
                     .withClaim("roleId", foundUser.getRoleId())
                     .withIssuedAt(new Date())
-                    // TODO переделать депрекейтед
                     .withExpiresAt(new Date(System.currentTimeMillis() + Long.parseLong(accessTime))).sign(
                             Algorithm.HMAC256(key)
                     );
@@ -135,20 +120,15 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         userRefreshToken.setRefreshToken(refreshEntry.getRefreshToken());
         refreshTokenRepository.save(userRefreshToken);
 
-        // ATTENTION Мб переделать
         if (user != null) {
             return new RefreshDataDto(userRefreshToken.getRefreshToken(), newToken, user.getRoleId(), user.getId());
-
         } else {
             return new RefreshDataDto(userRefreshToken.getRefreshToken(), newToken, 0, 0);
-
         }
-
 
     }
 
-    private User validateUser(String token, User user) throws RequestException {
-        // ATTENTION Мб переделать на перегрузку
+    private User findUser(String token, User user) throws RequestException {
         String localToken = token == null ? "" : token;
         if (user == null) {
             return userRepository.findById(Long.parseLong(tokenSearcher.getPayloadField(localToken, "userId"))).orElseThrow(() ->
