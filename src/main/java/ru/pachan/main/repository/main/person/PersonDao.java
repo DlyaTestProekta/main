@@ -40,7 +40,13 @@ public class PersonDao {
     }
 
     public PaginatedResponse<PersonQueryBuilder> getPersons(String firstName, List<String> firstNames) {
-        SqlBuilderResult<PersonQueryBuilder> result = sqlQueryBuilder.execute(makeParams(firstName, firstNames), 1L, "personId", OrderDirection.DESC, true);
+        SqlBuilderResult<PersonQueryBuilder> result = sqlQueryBuilder.execute(
+                makeParams(firstName, firstNames),
+                1L,
+                "personId",
+                OrderDirection.DESC,
+                true
+        );
         return new PaginatedResponse<>(result.getAmount(), result.getData());
     }
 
@@ -50,4 +56,5 @@ public class PersonDao {
         params.put("firstNames", firstNames);
         return params;
     }
+
 }

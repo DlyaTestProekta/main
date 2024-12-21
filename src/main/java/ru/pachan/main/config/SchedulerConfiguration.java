@@ -18,4 +18,5 @@ public class SchedulerConfiguration {
     public LockProvider lockProvider(final DataSource dataSource) {
         return new JdbcTemplateLockProvider(dataSource);
     }
+
 }

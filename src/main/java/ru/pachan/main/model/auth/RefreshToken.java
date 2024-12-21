@@ -38,4 +38,5 @@ public class RefreshToken {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private long id;
+
 }

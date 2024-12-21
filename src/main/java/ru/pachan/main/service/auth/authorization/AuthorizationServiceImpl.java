@@ -129,7 +129,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     private User findUser(String token, User user) throws RequestException {
-        String localToken = token == null ? "" : token;
+        var localToken = token == null ? "" : token;
         if (user == null) {
             return userRepository.findById(Long.parseLong(tokenSearcher.getPayloadField(localToken, "userId"))).orElseThrow(() ->
                     new RequestException(USER_IS_MISSING.getMessage(), UNAUTHORIZED));

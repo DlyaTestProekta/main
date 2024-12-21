@@ -30,6 +30,7 @@ import ru.pachan.main.service.auth.user.UserService;
 @RequiredArgsConstructor
 @Tag(name = "User")
 class UserController {
+
     private final UserService service;
 
     @Operation(summary = "Создание пользователя")
@@ -77,4 +78,5 @@ class UserController {
         service.deleteOne(id);
         return ResponseEntity.noContent().build();
     }
+
 }

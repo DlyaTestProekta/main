@@ -45,4 +45,5 @@ class AuthorizationController {
     ) throws RequestException {
         return ResponseEntity.ok(service.refresh(authToken));
     }
+
 }

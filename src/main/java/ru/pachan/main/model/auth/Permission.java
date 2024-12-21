@@ -45,4 +45,5 @@ public class Permission {
     @Column(name = "permission_id")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private long id;
+
 }

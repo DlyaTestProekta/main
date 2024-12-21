@@ -37,4 +37,5 @@ public class RolePermissionPermissionLevelId implements Serializable {
     public int hashCode() {
         return Objects.hash(roleId, permissionId, permissionLevelId);
     }
+
 }

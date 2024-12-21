@@ -37,7 +37,7 @@ public class SqlQueryBuilder<T> {
     }
 
     public String makeQueryTemplate(Map<String, Object> parameters) {
-        StringBuilder queryBuilder = new StringBuilder(baseQuery);
+        var queryBuilder = new StringBuilder(baseQuery);
         for (String key : parameters.keySet()) {
             Object parameter = parameters.get(key);
             String condition = conditions.get(key);

@@ -127,6 +127,6 @@ public class RequestProvider {
                 new RequestException(USER_IS_MISSING.getMessage(), UNAUTHORIZED)
         ).getRole().getName(), ADMIN)
         ) throw new RequestException(PERMISSION_DENIED.getMessage(), FORBIDDEN);
-
     }
+
 }

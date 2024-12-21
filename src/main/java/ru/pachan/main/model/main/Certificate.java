@@ -42,4 +42,5 @@ public class Certificate implements Serializable {
     @Column(name = "certificate_id")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private long id;
+
 }

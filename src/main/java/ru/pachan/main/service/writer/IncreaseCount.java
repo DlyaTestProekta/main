@@ -26,4 +26,5 @@ public class IncreaseCount {
     public void increaseCount() {
         kafkaTemplate.send(topicName, new WriterDto(1L, 1));
     }
+
 }

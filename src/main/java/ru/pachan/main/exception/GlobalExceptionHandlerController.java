@@ -62,4 +62,5 @@ public class GlobalExceptionHandlerController {
     ResponseEntity<String> validQueryParametersException(HandlerMethodValidationException e) {
         return new ResponseEntity<>(NOT_VALID_QUERY_PARAMETERS.getMessage(), BAD_REQUEST);
     }
+
 }

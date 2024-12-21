@@ -43,4 +43,5 @@ public class Organization implements Serializable {
     @Column(name = "organization_id")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private long id;
+
 }

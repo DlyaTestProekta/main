@@ -8,6 +8,7 @@ import ru.pachan.main.model.auth.PermissionLevel;
 
 @Repository
 public interface PermissionLevelRepository extends JpaRepository<PermissionLevel, Long> {
+
     @Query(
             "SELECT pl.permissionLevel" +
                     " FROM PermissionLevel pl " +
@@ -21,4 +22,5 @@ public interface PermissionLevelRepository extends JpaRepository<PermissionLevel
             @Param("roleId") Long roleId,
             @Param("permissionUname") String permissionUname
     );
+
 }

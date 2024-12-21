@@ -38,4 +38,5 @@ public class Skill {
     @Column(name = "skill_id")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private long id;
+
 }

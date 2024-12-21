@@ -56,4 +56,5 @@ public class User {
     @Column(name = "user_id")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private long id;
+
 }

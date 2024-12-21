@@ -39,7 +39,7 @@ public class CertificateGraphQlControllerTest {
     @Test()
     @DisplayName("Add certificate with GraphQL")
     void addCertificate() {
-        String query = """
+        var query = """
                 mutation {
                   newCertificate(certificateGraphQlDto: { code: "codeTestGraphQl" }) {
                     id
@@ -58,7 +58,7 @@ public class CertificateGraphQlControllerTest {
     @Test
     @DisplayName("Get all certificates with GraphQL")
     void findAll() {
-        String query = """
+        var query = """
                 {
                   certificates {
                     id
@@ -83,7 +83,7 @@ public class CertificateGraphQlControllerTest {
     @Test
     @DisplayName("Get certificate by Id with GraphQL")
     void findById() {
-        String query = """
+        var query = """
                   {
                   certificate(id: 1) {
                     id,

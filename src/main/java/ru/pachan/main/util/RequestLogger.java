@@ -30,7 +30,7 @@ public class RequestLogger {
             }
             return;
         }
-        StringBuilder message = new StringBuilder();
+        var message = new StringBuilder();
         message.append("\n");
         message.append(requestWrapper.getMethod()).append(" ").append(responseWrapper.getStatus());
         message.append("\n");

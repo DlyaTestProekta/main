@@ -31,4 +31,5 @@ public class PersonQueryBuilder implements Serializable {
 
     @Column
     private String surname;
+
 }

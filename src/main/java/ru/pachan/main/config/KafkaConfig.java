@@ -51,4 +51,5 @@ public class KafkaConfig {
     public String topicName() {
         return TopicBuilder.name(topicName).partitions(1).replicas(1).build().name();
     }
+
 }

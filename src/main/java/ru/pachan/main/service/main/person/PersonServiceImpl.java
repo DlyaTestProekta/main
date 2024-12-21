@@ -31,7 +31,6 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public PaginatedResponse<PersonDto> getAll(Pageable pageable, String firstName, List<String> firstNames) {
         Page<PersonDto> persons = repository.findAllPersonsDTOWithFilters(firstName, firstNames, pageable);
-
         return new PaginatedResponse<>(persons.getTotalElements(), persons.getContent());
     }
 
@@ -76,4 +75,5 @@ public class PersonServiceImpl implements PersonService {
     public void deleteOne(long id) {
         repository.deleteById(id);
     }
+
 }

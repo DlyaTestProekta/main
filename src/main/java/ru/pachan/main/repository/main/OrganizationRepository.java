@@ -17,4 +17,5 @@ public interface OrganizationRepository extends JpaRepository<Organization, Long
     // v2
     @EntityGraph(type = EntityGraph.EntityGraphType.FETCH, value = "organization_entity-graph")
     Page<Organization> findAllWithEntityGraph2By(Pageable pageable);
+
 }

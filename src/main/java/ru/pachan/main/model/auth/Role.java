@@ -48,4 +48,5 @@ public class Role {
     @Column(name = "role_id")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private long id;
+
 }

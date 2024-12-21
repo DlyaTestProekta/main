@@ -37,6 +37,6 @@ public class PersonSpecification implements Specification<Person> {
         }
 
         return criteriaBuilder.and(predicates.toArray(Predicate[]::new));
-
     }
+
 }

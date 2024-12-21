@@ -27,4 +27,5 @@ public interface PersonRepository extends JpaRepository<Person, Long>, JpaSpecif
             @Param("firstNames") List<String> firstNames,
             Pageable pageable
     );
+
 }

@@ -60,4 +60,5 @@ public class CertificateGraphQlController {
     private Specification<Certificate> byId(Integer id) {
         return (root, query, builder) -> builder.equal(root.get(Certificate_.id), id);
     }
+
 }

@@ -65,10 +65,10 @@ class CertificatesIntegrationTest {
     @Test
     @DisplayName("Check Certificates API with PostgreSQL with WebTestClient")
     void shouldReturnAllCertificatesWithWebTestClient() {
-        Certificate certificate1 = new Certificate();
+        var certificate1 = new Certificate();
         certificate1.setCode("codeTest1");
 
-        Certificate certificate2 = new Certificate();
+        var certificate2 = new Certificate();
         certificate2.setCode("codeTest2");
 
         this.certificateRepository.save(certificate1);
@@ -96,10 +96,10 @@ class CertificatesIntegrationTest {
     @Test
     @DisplayName("Check Certificates API with PostgreSQL with TestRestTemplate")
     void shouldReturnAllCertificatesWithTestRestTemplate() {
-        Certificate certificate3 = new Certificate();
+        var certificate3 = new Certificate();
         certificate3.setCode("codeTest3");
 
-        Certificate certificate4 = new Certificate();
+        var certificate4 = new Certificate();
         certificate4.setCode("codeTest4");
 
         this.certificateRepository.save(certificate3);
@@ -119,7 +119,7 @@ class CertificatesIntegrationTest {
                 PaginatedResponse.class
         );
 
-        ObjectMapper mapper = new ObjectMapper();
+        var mapper = new ObjectMapper();
         List<Certificate> certificateList = new ArrayList<>();
         assertTrue(response.getStatusCode().is2xxSuccessful());
         assertNotNull(response.getBody());
@@ -135,4 +135,5 @@ class CertificatesIntegrationTest {
         assertEquals("codeTest3", certificateList.get(2).getCode());
         assertEquals("codeTest4", certificateList.get(3).getCode());
     }
+
 }

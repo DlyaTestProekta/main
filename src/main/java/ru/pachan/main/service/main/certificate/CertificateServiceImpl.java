@@ -49,4 +49,5 @@ public class CertificateServiceImpl implements CertificateService {
     public void deleteOne(long id) {
         repository.deleteById(id);
     }
+
 }

@@ -35,4 +35,5 @@ public class NotificationController {
     ) throws RequestException {
         return ResponseEntity.ok(service.findByPersonIdNotification(id));
     }
+
 }

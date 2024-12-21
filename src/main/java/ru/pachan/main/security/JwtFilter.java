@@ -56,8 +56,8 @@ public class JwtFilter extends OncePerRequestFilter {
         if (request.getRequestURI().startsWith("/actuator")) {
             String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-            String username = "";
-            String password = "";
+            var username = "";
+            var password = "";
 
             if (authHeader != null && authHeader.startsWith("Basic ")) {
                 String base64Credentials = authHeader.substring("Basic ".length()).trim();
@@ -98,4 +98,5 @@ public class JwtFilter extends OncePerRequestFilter {
         RequestLogger.writeSlf4jLog(requestWrapper, responseWrapper, requestProvider, "");
         MDC.clear();
     }
+
 }
